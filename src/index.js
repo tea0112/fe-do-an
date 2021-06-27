@@ -2,24 +2,43 @@ import React from "react"
 import ReactDOM from "react-dom"
 import createSagaMiddleware from "redux-saga"
 import "./index.css"
-import { applyMiddleware, compose, createStore } from "redux"
+import { applyMiddleware, createStore } from "redux"
 import { Provider } from "react-redux"
 import { BrowserRouter } from "react-router-dom"
+import { composeWithDevTools } from "redux-devtools-extension"
+import { persistReducer, persistStore } from "redux-persist"
+import storage from "redux-persist/lib/storage"
 import App from "./App"
 import rootReducer from "./reducers"
+import rootSaga from "./sagas"
 
-const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+// persist react
+const persistConfig = {
+  key: "root",
+  storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
+// redux devtool
+const composeEnhancer = composeWithDevTools({
+  features: { defaultPanel: "state" },
+})
 
 const sagaMiddleware = createSagaMiddleware()
 
 const store = createStore(
-  rootReducer,
+  persistedReducer,
   composeEnhancer(applyMiddleware(sagaMiddleware))
 )
 
+const persistor = persistStore(store)
+
+sagaMiddleware.run(rootSaga)
+
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <Provider store={store} persistor={persistStore(persistor)}>
       <BrowserRouter>
         <App />
       </BrowserRouter>

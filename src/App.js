@@ -14,13 +14,13 @@ global.jQuery = $
 
 function App() {
   return (
-    <Switch>
-      <div className="App">
+    <div className="App">
+      <Switch>
         <Route path="/">
           <AppRoute />
         </Route>
-      </div>
-    </Switch>
+      </Switch>
+    </div>
   )
 }
 

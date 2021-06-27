@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import Avatar from "@material-ui/core/Avatar"
 import Button from "@material-ui/core/Button"
 import CssBaseline from "@material-ui/core/CssBaseline"
@@ -10,7 +10,12 @@ import Grid from "@material-ui/core/Grid"
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
 import Typography from "@material-ui/core/Typography"
 import { makeStyles } from "@material-ui/core/styles"
+import { useDispatch } from "react-redux"
 import backgroundImage from "../../helpers/static/imgs/tru_so_chinh.jpg"
+import {
+  loginRequestAsyncAction,
+  logoutSuccessAction,
+} from "../../actions/authenticationAction"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,6 +53,27 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
   const classes = useStyles()
 
+  const dispatch = useDispatch()
+
+  const [state, setState] = useState({ usernameTxField: "", pwdTxField: "" })
+
+  const usernameTxFieldChange = (e) => {
+    setState({ ...state, usernameTxField: e.target.value })
+  }
+  const pwdTxFieldChange = (e) => {
+    setState({ ...state, pwdTxField: e.target.value })
+  }
+
+  const loginSubmit = (e) => {
+    e.preventDefault()
+    dispatch(
+      loginRequestAsyncAction({
+        username: state.usernameTxField,
+        password: state.pwdTxField,
+      })
+    )
+  }
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -62,6 +88,8 @@ export default function Login() {
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
+              value={state.usernameTxField}
+              onChange={usernameTxFieldChange}
               variant="outlined"
               margin="normal"
               required
@@ -69,9 +97,12 @@ export default function Login() {
               id="account"
               label="Tài Khoản"
               name="account"
+              autoComplete="username"
               autoFocus
             />
             <TextField
+              value={state.pwdTxField}
+              onChange={pwdTxFieldChange}
               variant="outlined"
               margin="normal"
               required
@@ -87,13 +118,24 @@ export default function Login() {
               label="Duy trì đăng nhập"
             />
             <Button
-              type="submit"
+              type="button"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={loginSubmit}
             >
               Đăng Nhập
+            </Button>
+            <Button
+              type="button"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={() => dispatch(logoutSuccessAction())}
+            >
+              Logout ( tạm thời )
             </Button>
           </form>
         </div>
