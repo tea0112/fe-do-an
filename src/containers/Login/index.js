@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useMemo } from "react"
 import Avatar from "@material-ui/core/Avatar"
 import Button from "@material-ui/core/Button"
 import CssBaseline from "@material-ui/core/CssBaseline"
@@ -16,6 +16,7 @@ import {
   logoutSuccessAction,
 } from "../../actions/authenticationAction"
 import deepFreeze from "../../helpers/deepFreeze"
+import useStateWithLabel from "../../helpers/useStateWithLabel"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,37 +60,93 @@ export default function Login() {
 
   const dispatch = useDispatch()
 
-  const [state, setState] = useState({ usernameTxField: "", pwdTxField: "" })
+  const [firstUpdate, setFirstUpdate] = useStateWithLabel(false, "firstUpdate")
+  const [username, setUsername] = useStateWithLabel("", "username")
+  const [password, setPassword] = useStateWithLabel("", "password")
 
   const usernameTxFieldChange = (e) => {
-    setState({ ...state, usernameTxField: e.target.value })
+    setUsername(e.target.value)
   }
   const pwdTxFieldChange = (e) => {
-    setState({ ...state, pwdTxField: e.target.value })
+    setPassword(e.target.value)
   }
 
   const loginSubmit = (e) => {
     e.preventDefault()
+    if (!firstUpdate) {
+      setFirstUpdate(true)
+    }
     dispatch(
       loginRequestAsyncAction({
-        username: state.usernameTxField,
-        password: state.pwdTxField,
+        username,
+        password,
       })
     )
   }
 
-  const checkAuth = () => {
+  const checkAuth = useMemo(() => {
     if (!authentication.isLoading && authentication.isLoaded) {
       if (authentication.isAuthenticated) {
         return <Redirect to="/" />
       }
     }
     return null
-  }
+  }, [authentication.isAuthenticated])
+
+  const hasAuthError = useMemo(() => {
+    if (authentication.isLoaded && !authentication.isLoading) {
+      if (authentication.errorMessage) {
+        return (
+          <center>
+            <b style={{ color: "red" }}>Sai Tài Khoản Hoặc Mật Khẩu</b>
+          </center>
+        )
+      }
+    }
+    return null
+  }, [authentication.errorMessage])
+
+  const usernameFieldMemo = useMemo(
+    () => (
+      <TextField
+        value={username}
+        onChange={usernameTxFieldChange}
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        id="account"
+        label="Tài Khoản"
+        name="account"
+        autoComplete="username"
+        autoFocus
+      />
+    ),
+    [username]
+  )
+
+  const passwordFieldMemo = useMemo(
+    () => (
+      <TextField
+        value={password}
+        onChange={pwdTxFieldChange}
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        name="password"
+        label="Mật Khẩu"
+        type="password"
+        id="password"
+        autoComplete="current-password"
+      />
+    ),
+    [password]
+  )
 
   return (
     <>
-      {checkAuth()}
+      {checkAuth}
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
@@ -102,32 +159,9 @@ export default function Login() {
               Đăng Nhập Để Tiếp Tục
             </Typography>
             <form className={classes.form} noValidate>
-              <TextField
-                value={state.usernameTxField}
-                onChange={usernameTxFieldChange}
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="account"
-                label="Tài Khoản"
-                name="account"
-                autoComplete="username"
-                autoFocus
-              />
-              <TextField
-                value={state.pwdTxField}
-                onChange={pwdTxFieldChange}
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Mật Khẩu"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
+              {firstUpdate ? hasAuthError : null}
+              {usernameFieldMemo}
+              {passwordFieldMemo}
               {/* <FormControlLabel */}
               {/*  control={<Checkbox value="remember" color="primary" />} */}
               {/*  label="Duy trì đăng nhập" */}
