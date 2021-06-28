@@ -4,7 +4,6 @@ import createSagaMiddleware from "redux-saga"
 import "./index.css"
 import { applyMiddleware, createStore } from "redux"
 import { Provider } from "react-redux"
-import { BrowserRouter } from "react-router-dom"
 import { composeWithDevTools } from "redux-devtools-extension"
 import { persistReducer, persistStore } from "redux-persist"
 import storage from "redux-persist/lib/storage"
@@ -39,9 +38,7 @@ sagaMiddleware.run(rootSaga)
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store} persistor={persistStore(persistor)}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

@@ -3,6 +3,7 @@ import axios from "axios"
 import {
   LOGIN_REQUEST_ASYNC,
   loginFailureAction,
+  loginRequestAction,
   loginSuccessAction,
 } from "../actions/authenticationAction"
 
@@ -16,6 +17,7 @@ const login = (account) => {
 
 function* loginWorker({ payload }) {
   try {
+    yield put(loginRequestAction())
     const response = yield call(login, payload)
     if (response.status === 200) {
       yield put(loginSuccessAction(response.data))

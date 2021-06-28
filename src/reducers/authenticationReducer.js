@@ -1,29 +1,39 @@
 import deepFreeze from "../helpers/deepFreeze"
 import {
   LOGIN_FAILURE,
+  LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
 } from "../actions/authenticationAction"
 
 const initialState = deepFreeze({
-  loading: true,
+  isLoaded: false,
+  isLoading: true,
   isAuthenticated: false,
 })
 
 const requestLoginReducer = (state = initialState, { type, payload }) => {
   switch (type) {
+    case LOGIN_REQUEST:
+      return {
+        ...initialState,
+        isLoading: true,
+        isLoaded: false,
+      }
     case LOGIN_SUCCESS:
       window.localStorage.setItem("accessToken", payload.user.accessToken)
       return {
         ...initialState,
-        loading: false,
+        isLoading: false,
+        isLoaded: true,
         isAuthenticated: true,
         account: payload.user,
       }
     case LOGIN_FAILURE:
       return {
         ...initialState,
-        loading: false,
+        isLoading: false,
+        isLoaded: true,
         isAuthenticated: false,
         errorMessage: payload.errorMessage,
       }
@@ -31,7 +41,8 @@ const requestLoginReducer = (state = initialState, { type, payload }) => {
       window.localStorage.clear()
       return {
         ...initialState,
-        loading: true,
+        isLoading: false,
+        isLoaded: true,
         isAuthenticated: false,
       }
     default:
