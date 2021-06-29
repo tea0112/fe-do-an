@@ -12,7 +12,7 @@ function Sidebar() {
         {/* Sidebar - Brand */}
         <Link
           className="sidebar-brand d-flex align-items-center justify-content-center"
-          to="index.html"
+          to="/"
         >
           <div className="sidebar-brand-icon rotate-n-15">
             <i className="fas fa-tools" />
@@ -25,10 +25,10 @@ function Sidebar() {
 
         {/* Nav Item - Dashboard */}
         <li className="nav-item active">
-          <a className="nav-link" to="index.html">
+          <Link className="nav-link" to="/">
             <i className="fas fa-tv" />
             <span>Bảng Điều Khiển</span>
-          </a>
+          </Link>
         </li>
 
         {/* Divider */}

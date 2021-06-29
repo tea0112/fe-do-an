@@ -1,7 +1,6 @@
-import { Redirect, Route } from "react-router-dom"
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom"
 import { useSelector } from "react-redux"
 import React, { useMemo } from "react"
-import DebugRouter from "./DebugRouter"
 import HomePublic from "./public/Home"
 import AdminRoute from "./admin"
 import StudentRoute from "./student"
@@ -24,27 +23,27 @@ function AppRoute() {
   }, [])
 
   return (
-    <DebugRouter>
-      {checkAuth}
+    <BrowserRouter>
+      <Switch>
+        {checkAuth}
 
-      <Route
-        exact
-        path="/"
-        render={(props) => (
-          <HomePublic authentication={authentication} {...props} />
-        )}
-      />
+        <Route
+          exact
+          path="/"
+          render={(props) => (
+            <HomePublic authentication={authentication} {...props} />
+          )}
+        />
 
-      <Route path="/admin" component={AdminRoute} />
+        <Route path="/admin" component={AdminRoute} />
 
-      <Route path="/sinh-vien" component={StudentRoute} />
+        <Route path="/sinh-vien" component={StudentRoute} />
 
-      <Route path="/login" component={Login} />
+        <Route path="/login" component={Login} />
 
-      <Route path="*">
-        <NotFound />
-      </Route>
-    </DebugRouter>
+        <Route component={NotFound} />
+      </Switch>
+    </BrowserRouter>
   )
 }
 
