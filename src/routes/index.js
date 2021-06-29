@@ -2,21 +2,17 @@ import { Redirect, Route } from "react-router-dom"
 import { useSelector } from "react-redux"
 import React, { useMemo } from "react"
 import DebugRouter from "./DebugRouter"
-import HomeAdmin from "../containers/admin/Home"
-import HomeStudent from "../containers/student/Home"
 import HomePublic from "./public/Home"
-// import HomeClient from "../containers/student/Home"
-import PrivateRouteAdmin from "./PrivateRouteAdmin"
+import AdminRoute from "./admin"
+import StudentRoute from "./student"
 import deepFreeze from "../helpers/deepFreeze"
 import Login from "../containers/Login"
-import PrivateRouteStudent from "./PrivateRouteStudent"
+import NotFound from "../components/404"
 
 function AppRoute() {
   const authentication = useSelector((state) =>
     deepFreeze(state.authentication)
   )
-
-  // const [setFirstAuth, setSetFirstAuth] = useState(false)
 
   const checkAuth = useMemo(() => {
     if (!authentication.isLoading && authentication.isLoaded) {
@@ -39,19 +35,15 @@ function AppRoute() {
         )}
       />
 
-      <PrivateRouteStudent
-        path="/sinh-vien"
-        component={HomeStudent}
-        authentication={authentication}
-      />
+      <Route path="/admin" component={AdminRoute} />
 
-      <PrivateRouteAdmin
-        path="/admin"
-        component={HomeAdmin}
-        authentication={authentication}
-      />
+      <Route path="/sinh-vien" component={StudentRoute} />
 
       <Route path="/login" component={Login} />
+
+      <Route path="*">
+        <NotFound />
+      </Route>
     </DebugRouter>
   )
 }

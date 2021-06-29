@@ -1,7 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import createSagaMiddleware from "redux-saga"
-import "./index.css"
 import { applyMiddleware, createStore } from "redux"
 import { Provider } from "react-redux"
 import { composeWithDevTools } from "redux-devtools-extension"
