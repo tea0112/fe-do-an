@@ -1,4 +1,7 @@
 import undrawProfile from "../../helpers/static/pages/sbadmin2/img/undraw_profile.svg"
+import undrawProfile1 from "../../helpers/static/pages/sbadmin2/img/undraw_profile_1.svg"
+import undrawProfile2 from "../../helpers/static/pages/sbadmin2/img/undraw_profile_2.svg"
+import undrawProfile3 from "../../helpers/static/pages/sbadmin2/img/undraw_profile_3.svg"
 
 function Navbar() {
   return (
@@ -161,7 +164,7 @@ function Navbar() {
                 <div className="dropdown-list-image mr-3">
                   <img
                     className="rounded-circle"
-                    src="img/undraw_profile_1.svg"
+                    src={undrawProfile1}
                     alt="..."
                   />
                   <div className="status-indicator bg-success" />
@@ -178,7 +181,7 @@ function Navbar() {
                 <div className="dropdown-list-image mr-3">
                   <img
                     className="rounded-circle"
-                    src="img/undraw_profile_2.svg"
+                    src={undrawProfile2}
                     alt="..."
                   />
                   <div className="status-indicator" />
@@ -195,7 +198,7 @@ function Navbar() {
                 <div className="dropdown-list-image mr-3">
                   <img
                     className="rounded-circle"
-                    src="img/undraw_profile_3.svg"
+                    src={undrawProfile3}
                     alt="..."
                   />
                   <div className="status-indicator bg-warning" />

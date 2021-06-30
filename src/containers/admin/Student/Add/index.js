@@ -1,11 +1,15 @@
 import useStateWithLabel from "../../../../helpers/useStateWithLabel"
+import StudentNumber from "./StudentNumber"
+import Password from "./Password"
+import ReTypePassword from "./ReTypePassword"
+import FirstName from "./FirstName"
 
 function AddStudent() {
   const [studentNumber, setStudentNumber] = useStateWithLabel(
-    "",
+    null,
     "studentNumber"
   )
-  const [password, setPassword] = useStateWithLabel("", "password")
+  const [password, setPassword] = useStateWithLabel(null, "password")
   const [reTypePassword, setReTypePassword] = useStateWithLabel(
     "",
     "reTypePassword"
@@ -19,15 +23,6 @@ function AddStudent() {
   const [clazz, setClass] = useStateWithLabel("", "clazz")
   const [gender, setGender] = useStateWithLabel("", "gender")
 
-  const onStudentNumberChange = (e) => {
-    setStudentNumber(e.target.value)
-  }
-  const onPasswordChange = (e) => {
-    setPassword(e.target.value)
-  }
-  const onReTypePasswordChange = (e) => {
-    setReTypePassword(e.target.value)
-  }
   const onFirstNameChange = (e) => {
     setFirstName(e.target.value)
   }
@@ -57,38 +52,23 @@ function AddStudent() {
     <>
       <h1 className="h3 mb-4 text-gray-800">Thêm Sinh Viên</h1>
       <form name="addStudent" method="post">
-        <div className="form-group">
-          Mã Số Sinh Viên
-          <input
-            value={studentNumber}
-            onChange={onStudentNumberChange}
-            type="text"
-            className="form-control"
-            id="usernameInput"
-            autoComplete="off"
-          />
-        </div>
-        <div className="form-group">
-          Mật Khẩu
-          <input
-            value={password}
-            onChange={onPasswordChange}
-            type="password"
-            className="form-control"
-            id="passwordInput"
-            autoComplete="off"
-          />
-        </div>
-        <div className="form-group">
-          Nhập Lại Mật Khẩu
-          <input
-            value={reTypePassword}
-            onChange={onReTypePasswordChange}
-            type="password"
-            className="form-control"
-            id="repasswordInput"
-          />
-        </div>
+        <StudentNumber
+          onStudentNumberChildChange={setStudentNumber}
+          studentNumber={studentNumber}
+        />
+        <Password
+          onPasswordChildChange={setPassword}
+          studentNumber={password}
+        />
+        <ReTypePassword
+          onReTypePasswordChildChange={setReTypePassword}
+          password={password}
+          reTypePassword={reTypePassword}
+        />
+        <FirstName
+          onFirstNameChildChange={setFirstName}
+          firstName={firstName}
+        />
         <div className="form-group">
           Họ
           <input
