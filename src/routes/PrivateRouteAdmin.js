@@ -1,22 +1,32 @@
 import { Redirect, Route } from "react-router-dom"
 import React, { useLayoutEffect } from "react"
 import $ from "jquery"
+import { useSelector } from "react-redux"
 import Sidebar from "../components/Sidebar"
 import "../helpers/static/pages/sbadmin2/css/sb-admin-2.min.css"
 import "../helpers/static/pages/sbadmin2/vendor/fontawesome-free/css/all.min.css"
 import customScriptSbadmin from "../helpers/static/pages/sbadmin2/js/sb-admin-2"
 import Navbar from "../containers/Navbar"
 import LogoutModal from "../components/LogoutModal"
+import deepFreeze from "../helpers/deepFreeze"
 
-const PrivateRouteAdmin = ({
-  component: Component,
-  authentication,
-  ...rest
-}) => {
+const PrivateRouteAdmin = ({ component: Component, ...rest }) => {
   useLayoutEffect(() => {
     customScriptSbadmin($)
   })
-  return (
+
+  const authentication = useSelector((state) =>
+    deepFreeze(state.authentication)
+  )
+
+  const isCompletedRender = () => {
+    if (!authentication.isLoading && authentication.isLoaded) {
+      return true
+    }
+    return false
+  }
+
+  return isCompletedRender() ? (
     <Route
       {...rest}
       render={(props) => {
@@ -48,7 +58,7 @@ const PrivateRouteAdmin = ({
         return <Redirect to="/login" />
       }}
     />
-  )
+  ) : null
 }
 
 export default PrivateRouteAdmin

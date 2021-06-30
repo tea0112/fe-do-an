@@ -1,105 +1,179 @@
+import useStateWithLabel from "../../../../helpers/useStateWithLabel"
+
 function AddStudent() {
+  const [studentNumber, setStudentNumber] = useStateWithLabel(
+    "",
+    "studentNumber"
+  )
+  const [password, setPassword] = useStateWithLabel("", "password")
+  const [reTypePassword, setReTypePassword] = useStateWithLabel(
+    "",
+    "reTypePassword"
+  )
+  const [firstName, setFirstName] = useStateWithLabel("", "firstName")
+  const [lastName, setLastName] = useStateWithLabel("", "lastName")
+  const [birth, setBirth] = useStateWithLabel("1971-11-03", "birth")
+  const [place, setPlace] = useStateWithLabel("", "place")
+  const [phoneNumber, setPhoneNumber] = useStateWithLabel("", "phoneNumber")
+  const [session, setSession] = useStateWithLabel("", "session")
+  const [clazz, setClass] = useStateWithLabel("", "clazz")
+  const [gender, setGender] = useStateWithLabel("", "gender")
+
+  const onStudentNumberChange = (e) => {
+    setStudentNumber(e.target.value)
+  }
+  const onPasswordChange = (e) => {
+    setPassword(e.target.value)
+  }
+  const onReTypePasswordChange = (e) => {
+    setReTypePassword(e.target.value)
+  }
+  const onFirstNameChange = (e) => {
+    setFirstName(e.target.value)
+  }
+  const onLastNameChange = (e) => {
+    setLastName(e.target.value)
+  }
+  const onBirthChange = (e) => {
+    setBirth(e.target.value)
+  }
+  const onPlaceChange = (e) => {
+    setPlace(e.target.value)
+  }
+  const onPhoneNumberChange = (e) => {
+    setPhoneNumber(e.target.value)
+  }
+  const onSessionChange = (e) => {
+    setSession(e.target.value)
+  }
+  const onClazzChange = (e) => {
+    setClass(e.target.value)
+  }
+  const onGenderChange = (e) => {
+    setGender(e.target.value)
+  }
+
   return (
     <>
       <h1 className="h3 mb-4 text-gray-800">Thêm Sinh Viên</h1>
       <form name="addStudent" method="post">
         <div className="form-group">
-          <label htmlFor="usernameInput">
-            Mã Số Sinh Viên
-            <input
-              type="text"
-              className="form-control"
-              id="usernameInput"
-              autoComplete="off"
-            />
-          </label>
+          Mã Số Sinh Viên
+          <input
+            value={studentNumber}
+            onChange={onStudentNumberChange}
+            type="text"
+            className="form-control"
+            id="usernameInput"
+            autoComplete="off"
+          />
         </div>
         <div className="form-group">
-          <label htmlFor="passwordInput">
-            Mật Khẩu
-            <input
-              type="password"
-              className="form-control"
-              id="passwordInput"
-              autoComplete="off"
-            />
-          </label>
+          Mật Khẩu
+          <input
+            value={password}
+            onChange={onPasswordChange}
+            type="password"
+            className="form-control"
+            id="passwordInput"
+            autoComplete="off"
+          />
         </div>
         <div className="form-group">
-          <label htmlFor="repasswordInput">
-            Nhập Lại Mật Khẩu
-            <input
-              type="password"
-              className="form-control"
-              id="repasswordInput"
-            />
-          </label>
+          Nhập Lại Mật Khẩu
+          <input
+            value={reTypePassword}
+            onChange={onReTypePasswordChange}
+            type="password"
+            className="form-control"
+            id="repasswordInput"
+          />
         </div>
         <div className="form-group">
-          <label htmlFor="firstNameInput">
-            Họ
-            <input type="text" className="form-control" id="firstNameInput" />
-          </label>
+          Họ
+          <input
+            value={firstName}
+            onChange={onFirstNameChange}
+            type="text"
+            className="form-control"
+            id="firstNameInput"
+          />
         </div>
         <div className="form-group">
-          <label htmlFor="lastNameInput">
-            Tên
-            <input type="text" className="form-control" id="lastNameInput" />
-          </label>
+          Tên
+          <input
+            value={lastName}
+            onChange={onLastNameChange}
+            type="text"
+            className="form-control"
+            id="lastNameInput"
+          />
         </div>
         <div className="form-group">
-          <label htmlFor="birthInput">
-            Ngày Sinh
-            <input
-              className="form-control"
-              type="date"
-              value="2011-08-19"
-              id="birthInput"
-            />
-          </label>
+          Ngày Sinh
+          <input
+            value={birth}
+            onChange={onBirthChange}
+            className="form-control"
+            type="date"
+            id="birthInput"
+          />
         </div>
         <div className="form-group">
-          <label htmlFor="placeInput">
-            Thường Trú
-            <input type="text" className="form-control" id="placeInput" />
-          </label>
+          Thường Trú
+          <input
+            value={place}
+            onChange={onPlaceChange}
+            type="text"
+            className="form-control"
+            id="placeInput"
+          />
         </div>
         <div className="form-group">
-          <label htmlFor="phoneNumberInput">
-            Số Điện Thoại
-            <input type="text" className="form-control" id="phoneNumberInput" />
-          </label>
+          Số Điện Thoại
+          <input
+            value={phoneNumber}
+            onChange={onPhoneNumberChange}
+            type="text"
+            className="form-control"
+            id="phoneNumberInput"
+          />
         </div>
         <div className="form-group">
-          <label htmlFor="sessionInput">
-            Niên Khoá
+          Niên Khoá
+          <select
+            value={session}
+            onChange={onSessionChange}
+            className="form-control"
+            id="sessionInput"
+          >
+            <option value="1">1</option>
+          </select>
+        </div>
+        <div className="form-group">
+          Thuộc Lớp Cơ Bản:
+          <div>
             <select
+              value={clazz}
+              onChange={onClazzChange}
               className="form-control"
-              id="sessionInput"
-              onChange="onSessionChange()"
+              id="classInput"
             >
               <option value="1">1</option>
             </select>
-          </label>
+          </div>
         </div>
         <div className="form-group">
-          <label htmlFor="classInput">
-            Thuộc Lớp Cơ Bản:
-            <div>
-              <select className="form-control" id="classInput">
-                <option value="1">1</option>
-              </select>
-            </div>
-          </label>
-        </div>
-        <div className="form-group">
-          <label htmlFor="classInput">
-            Giới Tính:
-            <select className="form-control" id="genderInput">
-              <option value="false">Nam</option>
-              <option value="true">Nữ</option>
-            </select>
-          </label>
+          Giới Tính:
+          <select
+            value={gender}
+            onChange={onGenderChange}
+            className="form-control"
+            id="genderInput"
+          >
+            <option value="false">Nam</option>
+            <option value="true">Nữ</option>
+          </select>
         </div>
         <button type="submit" className="btn btn-primary">
           Thêm

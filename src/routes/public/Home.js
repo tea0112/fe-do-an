@@ -3,16 +3,13 @@ import React from "react"
 
 function Home({ authentication }) {
   const isAdmin = () => {
-    if (!authentication.isLoading && authentication.isLoaded) {
-      if (authentication.isAuthenticated) {
-        if (authentication.account.user.admin) {
-          return <Redirect to="/admin" />
-        }
-        return <Redirect to="/sinh-vien" />
+    if (authentication.isAuthenticated) {
+      if (authentication.account.user.admin) {
+        return <Redirect to="/admin" />
       }
-      return <Redirect to="/login" />
+      return <Redirect to="/sinh-vien" />
     }
-    return null
+    return <Redirect to="/login" />
   }
   return <>{isAdmin()}</>
 }

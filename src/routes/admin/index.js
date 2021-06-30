@@ -12,23 +12,16 @@ function AdminRoute() {
     deepFreeze(state.authentication)
   )
 
-  return (
+  const isCompletedRender = () =>
+    !!(!authentication.isLoading && authentication.isLoaded)
+
+  return isCompletedRender ? (
     <Switch>
-      <PrivateRouteAdmin
-        exact
-        path="/admin"
-        component={HomeAdmin}
-        authentication={authentication}
-      />
-      <PrivateRouteAdmin
-        exact
-        path="/admin/sinh-vien/them"
-        component={AddStudent}
-        authentication={authentication}
-      />
+      <PrivateRouteAdmin exact path="/admin" component={HomeAdmin} />
+      <PrivateRouteAdmin path="/admin/sinh-vien/them" component={AddStudent} />
       <Route component={NotFound} />
     </Switch>
-  )
+  ) : null
 }
 
 export default AdminRoute
