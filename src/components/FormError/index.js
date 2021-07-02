@@ -1,5 +1,5 @@
-function FormError({ errorMessage, isHidden }) {
-  if (isHidden) return null
+function FormError({ errorMessage }) {
+  if (errorMessage.length === 0) return null
   return <div style={{ color: "red" }}>{errorMessage}</div>
 }
 

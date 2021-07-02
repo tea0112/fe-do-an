@@ -1,17 +1,17 @@
-import { useEffect } from "react"
+import { memo, useEffect } from "react"
+import _ from "lodash"
 import useStateWithLabel from "../../../../../helpers/useStateWithLabel"
 import FormError from "../../../../../components/FormError"
 
-function ReTypePassword({ onReTypePasswordChildChange, password }) {
+function ReTypePassword(props) {
   const [reTypePassword, setReTypePassword] = useStateWithLabel(
     "",
     "reTypePassword"
   )
   const [isValid, setIsValid] = useStateWithLabel(true, "isValid")
   const [errorMessage, setErrorMessage] = useStateWithLabel("", "errorMessage")
-
   useEffect(() => {
-    onReTypePasswordChildChange({
+    props.onReTypePasswordChildChange({
       value: reTypePassword,
       isValid,
       errorMessage,
@@ -19,7 +19,7 @@ function ReTypePassword({ onReTypePasswordChildChange, password }) {
   }, [reTypePassword])
 
   const validateInput = (text) => {
-    if (text === password.value) {
+    if (text === props.password.value) {
       setIsValid(true)
       setErrorMessage("")
     } else {
@@ -49,4 +49,7 @@ function ReTypePassword({ onReTypePasswordChildChange, password }) {
   )
 }
 
-export default ReTypePassword
+function propsAreEqual(prv, nxt) {
+  return _.isEqual(prv.password, nxt.password)
+}
+export default memo(ReTypePassword, propsAreEqual)

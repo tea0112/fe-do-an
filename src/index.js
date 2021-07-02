@@ -6,6 +6,8 @@ import { Provider } from "react-redux"
 import { composeWithDevTools } from "redux-devtools-extension"
 import { persistReducer, persistStore } from "redux-persist"
 import storage from "redux-persist/lib/storage"
+import { PersistGate } from "redux-persist/integration/react"
+import { BrowserRouter } from "react-router-dom"
 import App from "./App"
 import rootReducer from "./reducers"
 import rootSaga from "./sagas"
@@ -36,8 +38,12 @@ sagaMiddleware.run(rootSaga)
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store} persistor={persistStore(persistor)}>
-      <App />
+    <Provider store={store}>
+      <BrowserRouter>
+        <PersistGate persistor={persistor}>
+          <App />
+        </PersistGate>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

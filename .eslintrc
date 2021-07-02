@@ -7,6 +7,9 @@
     "prettier"
   ],
   "rules": {
+    "no-param-reassign": 0,
+    "no-restricted-syntax": 0,
+    "react/destructuring-assignment": 0,
     "react/react-in-jsx-scope": 0,
     "semi": 0,
     "import/no-named-as-default": 0,
@@ -16,6 +19,7 @@
     "react/require-default-props": 0,
     "no-alert": 0,
     "jsx-a11y/anchor-is-valid": 0,
+    "no-undef": 0,
     "no-debugger": 0,
     "react/jsx-props-no-spreading": 0,
     "react/jsx-filename-extension": [

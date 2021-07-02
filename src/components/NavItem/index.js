@@ -16,7 +16,7 @@ function NavItem({ title, uniqCollapseName, children, fontAwesome }) {
       <div
         id={uniqCollapseName}
         className="collapse"
-        aria-labelledby="headingTwo"
+        aria-labelledby={uniqCollapseName}
         data-parent="#accordionSidebar"
       >
         <div className="bg-white py-2 collapse-inner rounded">

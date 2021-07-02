@@ -19,7 +19,7 @@ function StudentNumber({ onStudentNumberChildChange }) {
   }, [studentNumber])
 
   const validateInput = (text) => {
-    const regex = new RegExp("^[-a-zA-Z0-9-()]+([-a-zA-Z0-9-()]+)*$")
+    const regex = new RegExp("^[-a-zA-Z0-9-]+([-a-zA-Z0-9-]+)*$")
     if (regex.test(text) && text.length > 0) {
       setIsValid(true)
       setErrorMessage("")

@@ -4,17 +4,17 @@ import useStateWithLabel from "../../../../../helpers/useStateWithLabel"
 import FormError from "../../../../../components/FormError"
 import removeAscent from "../../../../../helpers/removeAscent"
 
-function FirstName(props) {
-  const [firstName, setFirstName] = useStateWithLabel("", "firstName")
+function LastName(props) {
+  const [lastName, setLastName] = useStateWithLabel("", "lastName")
   const [isValid, setIsValid] = useStateWithLabel(true, "isValid")
   const [errorMessage, setErrorMessage] = useStateWithLabel("", "errorMessage")
   useEffect(() => {
-    props.onFirstNameChildChange({
-      value: firstName,
+    props.onLastNameChildChange({
+      value: lastName,
       isValid,
       errorMessage,
     })
-  }, [firstName])
+  }, [lastName])
 
   const validateInput = (text) => {
     const regex = new RegExp("^[a-zA-Z\\s]*$")
@@ -23,31 +23,33 @@ function FirstName(props) {
       setErrorMessage("")
     } else {
       setIsValid(false)
-      setErrorMessage("Họ sinh viên chỉ cho phép là chữ, không để trống")
+      setErrorMessage("Tên sinh viên chỉ cho phép là chữ, không để trống")
     }
   }
 
-  const onFirstNameChange = (e) => {
-    setFirstName(e.target.value.toLowerCase())
+  const onLastNameChange = (e) => {
+    setLastName(e.target.value.toLowerCase())
     validateInput(e.target.value.toLowerCase())
   }
 
   return (
     <div className="form-group">
-      Họ Sinh Viên
+      Tên Sinh Viên
       <input
-        value={firstName}
-        onChange={onFirstNameChange}
+        value={lastName}
+        onChange={onLastNameChange}
         type="text"
         className="form-control"
-        id="firstNameInput"
+        id="lastNameInput"
         autoComplete="off"
       />
-      <FormError errorMessage={errorMessage} />
+      <FormError isValid={isValid} errorMessage={errorMessage} />
     </div>
   )
 }
 
-export default memo(FirstName, (prev, next) =>
-  _.isEqual(prev.onFirstNameChildChange, next.onFirstNameChildChange)
-)
+function propsAreEqual(prev, next) {
+  return _.isEqual(prev.lastName, next.lastName)
+}
+
+export default memo(LastName, propsAreEqual)

@@ -1,14 +1,14 @@
-import { useEffect } from "react"
+import { memo, useEffect } from "react"
+import _ from "lodash"
 import useStateWithLabel from "../../../../../helpers/useStateWithLabel"
 import FormError from "../../../../../components/FormError"
 
-function Password({ onPasswordChildChange }) {
+function Password(props) {
   const [password, setPassword] = useStateWithLabel("", "password")
   const [isValid, setIsValid] = useStateWithLabel(true, "isValid")
   const [errorMessage, setErrorMessage] = useStateWithLabel("", "errorMessage")
-
   useEffect(() => {
-    onPasswordChildChange({
+    props.onPasswordChildChange({
       value: password,
       isValid,
       errorMessage,
@@ -46,4 +46,8 @@ function Password({ onPasswordChildChange }) {
   )
 }
 
-export default Password
+function propsAreEqual(prv, nxt) {
+  return _.isEqual(prv.password, nxt.password)
+}
+
+export default memo(Password, propsAreEqual)

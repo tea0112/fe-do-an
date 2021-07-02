@@ -3,8 +3,20 @@ import StudentNumber from "./StudentNumber"
 import Password from "./Password"
 import ReTypePassword from "./ReTypePassword"
 import FirstName from "./FirstName"
+import LastName from "./LastName"
+import Birth from "./Birth"
+import Place from "./Place"
+import PhoneNumber from "./PhoneNumber"
+import Session from "./Session"
+import BasicClass from "./BasicClass"
+import Gender from "./Gender"
+import hasOwnProperty from "../../../../helpers/hasOwnPropperty"
+// import axiosAuthRequest from "../../../../helpers/axiosAuthRequest"
+import useRequest from "../../../../helpers/useRequest"
 
 function AddStudent() {
+  const [request] = useRequest()
+
   const [studentNumber, setStudentNumber] = useStateWithLabel(
     null,
     "studentNumber"
@@ -23,35 +35,63 @@ function AddStudent() {
   const [clazz, setClass] = useStateWithLabel("", "clazz")
   const [gender, setGender] = useStateWithLabel("", "gender")
 
-  const onFirstNameChange = (e) => {
-    setFirstName(e.target.value)
-  }
-  const onLastNameChange = (e) => {
-    setLastName(e.target.value)
-  }
-  const onBirthChange = (e) => {
-    setBirth(e.target.value)
-  }
-  const onPlaceChange = (e) => {
-    setPlace(e.target.value)
-  }
-  const onPhoneNumberChange = (e) => {
-    setPhoneNumber(e.target.value)
-  }
-  const onSessionChange = (e) => {
-    setSession(e.target.value)
-  }
-  const onClazzChange = (e) => {
-    setClass(e.target.value)
-  }
-  const onGenderChange = (e) => {
-    setGender(e.target.value)
+  const states = [
+    studentNumber,
+    password,
+    reTypePassword,
+    firstName,
+    lastName,
+    birth,
+    place,
+    phoneNumber,
+    session,
+    clazz,
+    gender,
+  ]
+
+  const onSubmit = async (e) => {
+    e.preventDefault()
+    for (const state of states) {
+      if (hasOwnProperty(state, "isValid")) {
+        if (!state.isValid || state.value === "" || state.value == null) {
+          alert("Tồn tại lỗi nhập liệu")
+          return null
+        }
+      }
+    }
+    const url = `/api/admin/student/add`
+    const data = {
+      username: studentNumber.value,
+      password: password.value,
+      repassword: reTypePassword.value,
+      firstName: firstName.value,
+      lastName: lastName.value,
+      birth: birth.value,
+      place: place.value,
+      phoneNumber: phoneNumber.value,
+      sessionId: parseInt(session.value, 10),
+      classId: parseInt(clazz.value, 10),
+      gender: parseInt(gender.value, 10),
+    }
+    try {
+      const response = await request.post(url, data)
+      // eslint-disable-next-line no-console
+      console.log(response)
+      alert("Thêm sinh viên thành công")
+      window.location.reload()
+    } catch (err) {
+      alert("Thêm sinh viên thất bại")
+      // eslint-disable-next-line no-console
+      console.log(data, err)
+      window.location.reload()
+    }
+    return null
   }
 
   return (
     <>
       <h1 className="h3 mb-4 text-gray-800">Thêm Sinh Viên</h1>
-      <form name="addStudent" method="post">
+      <form name="addStudent" method="post" onSubmit={onSubmit}>
         <StudentNumber
           onStudentNumberChildChange={setStudentNumber}
           studentNumber={studentNumber}
@@ -69,92 +109,20 @@ function AddStudent() {
           onFirstNameChildChange={setFirstName}
           firstName={firstName}
         />
-        <div className="form-group">
-          Họ
-          <input
-            value={firstName}
-            onChange={onFirstNameChange}
-            type="text"
-            className="form-control"
-            id="firstNameInput"
-          />
-        </div>
-        <div className="form-group">
-          Tên
-          <input
-            value={lastName}
-            onChange={onLastNameChange}
-            type="text"
-            className="form-control"
-            id="lastNameInput"
-          />
-        </div>
-        <div className="form-group">
-          Ngày Sinh
-          <input
-            value={birth}
-            onChange={onBirthChange}
-            className="form-control"
-            type="date"
-            id="birthInput"
-          />
-        </div>
-        <div className="form-group">
-          Thường Trú
-          <input
-            value={place}
-            onChange={onPlaceChange}
-            type="text"
-            className="form-control"
-            id="placeInput"
-          />
-        </div>
-        <div className="form-group">
-          Số Điện Thoại
-          <input
-            value={phoneNumber}
-            onChange={onPhoneNumberChange}
-            type="text"
-            className="form-control"
-            id="phoneNumberInput"
-          />
-        </div>
-        <div className="form-group">
-          Niên Khoá
-          <select
-            value={session}
-            onChange={onSessionChange}
-            className="form-control"
-            id="sessionInput"
-          >
-            <option value="1">1</option>
-          </select>
-        </div>
-        <div className="form-group">
-          Thuộc Lớp Cơ Bản:
-          <div>
-            <select
-              value={clazz}
-              onChange={onClazzChange}
-              className="form-control"
-              id="classInput"
-            >
-              <option value="1">1</option>
-            </select>
-          </div>
-        </div>
-        <div className="form-group">
-          Giới Tính:
-          <select
-            value={gender}
-            onChange={onGenderChange}
-            className="form-control"
-            id="genderInput"
-          >
-            <option value="false">Nam</option>
-            <option value="true">Nữ</option>
-          </select>
-        </div>
+        <LastName onLastNameChildChange={setLastName} lastName={lastName} />
+        <Birth onBirthChildChange={setBirth} birth={birth} />
+        <Place onPlaceChildChange={setPlace} place={place} />
+        <PhoneNumber
+          onPhoneNumberChildChange={setPhoneNumber}
+          phoneNumber={phoneNumber}
+        />
+        <Session onSessionChildChange={setSession} session={session} />
+        <BasicClass
+          onBasicClassChildChange={setClass}
+          session={session !== "" ? session : null}
+          clazz={clazz}
+        />
+        <Gender onGenderChildChange={setGender} gender={gender} />
         <button type="submit" className="btn btn-primary">
           Thêm
         </button>

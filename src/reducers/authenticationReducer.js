@@ -7,8 +7,8 @@ import {
 } from "../actions/authenticationAction"
 
 const initialState = deepFreeze({
-  isLoaded: false,
-  isLoading: true,
+  isLoaded: true,
+  isLoading: false,
   isAuthenticated: false,
 })
 
@@ -17,8 +17,8 @@ const requestLoginReducer = (state = initialState, { type, payload }) => {
     case LOGIN_REQUEST:
       return {
         ...initialState,
-        isLoading: true,
-        isLoaded: false,
+        isLoading: false,
+        isLoaded: true,
       }
     case LOGIN_SUCCESS:
       window.localStorage.setItem("accessToken", payload.user.accessToken)
