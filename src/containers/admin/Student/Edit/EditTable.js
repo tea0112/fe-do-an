@@ -67,7 +67,7 @@ function Editable(props) {
     },
     pagination: {
       labelRowsSelect: "Dòng",
-      labelDisplayedRows: "{from}-{to} trang {count}",
+      labelDisplayedRows: "{from}-{to} của {count}",
     },
     body: {
       emptyDataSourceMessage: "Không Tồn Tại Bản Ghi Nào",

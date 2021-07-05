@@ -19,7 +19,7 @@ function AddStudent() {
     document.title = "Thêm Sinh Viên"
   }, [])
 
-  const [request] = useAuthRequest()
+  const request = useAuthRequest()
 
   const [studentNumber, setStudentNumber] = useStateWithLabel(
     null,
