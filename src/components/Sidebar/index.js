@@ -58,6 +58,14 @@ function Sidebar() {
           <CollapseLinkItem title="Thêm Lớp" url="/admin/lop/them" />
           <CollapseLinkItem title="Sửa Lớp" url="/admin/lop/sua" />
           <CollapseLinkItem title="Xoá Lớp" url="/admin/lop/xoa" />
+          <CollapseLinkItem
+            title="Thêm Sinh Viên Vào Lớp"
+            url="/admin/lop/them-sinh-vien"
+          />
+          <CollapseLinkItem
+            title="Xoá Sinh Viên Khỏi Lớp"
+            url="/admin/lop/xoa-sinh-vien"
+          />
         </NavItem>
 
         <NavItem

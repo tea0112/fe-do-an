@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import useStateWithLabel from "../../../../helpers/useStateWithLabel"
 import StudentNumber from "./StudentNumber"
 import Password from "./Password"
@@ -11,11 +12,14 @@ import Session from "./Session"
 import BasicClass from "./BasicClass"
 import Gender from "./Gender"
 import hasOwnProperty from "../../../../helpers/hasOwnPropperty"
-// import axiosAuthRequest from "../../../../helpers/axiosAuthRequest"
-import useRequest from "../../../../helpers/useRequest"
+import useAuthRequest from "../../../../helpers/useAuthRequest"
 
 function AddStudent() {
-  const [request] = useRequest()
+  useEffect(() => {
+    document.title = "Thêm Sinh Viên"
+  }, [])
+
+  const [request] = useAuthRequest()
 
   const [studentNumber, setStudentNumber] = useStateWithLabel(
     null,
@@ -90,7 +94,7 @@ function AddStudent() {
 
   return (
     <>
-      <h1 className="h3 mb-4 text-gray-800">Thêm Sinh Viên</h1>
+      <h1>Thêm Sinh Viên</h1>
       <form name="addStudent" method="post" onSubmit={onSubmit}>
         <StudentNumber
           onStudentNumberChildChange={setStudentNumber}
