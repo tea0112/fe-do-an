@@ -19,6 +19,9 @@ function StudentAdd() {
     authRequest.get(`/api/students?sessionId=${sessionId}`)
 
   useEffect(() => {
+    document.title = "Thêm Sinh Viên Vào Lớp"
+  }, [])
+  useEffect(() => {
     Promise.all([getSession()]).then(([sessionArr]) => {
       setSessions(sessionArr.data)
       if (sessionArr.data) {

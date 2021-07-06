@@ -2,6 +2,9 @@ import { useState, useEffect } from "react"
 import useAuthRequest from "../../../../helpers/useAuthRequest"
 
 function AddClass() {
+  useEffect(() => {
+    document.title = "Thêm Sinh Viên Vào Lớp"
+  }, [])
   const authRequest = useAuthRequest()
   const [state, setState] = useState({
     lectureHalls: null,
