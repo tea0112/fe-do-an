@@ -74,6 +74,9 @@ function DeleteTable(props) {
     },
     body: {
       emptyDataSourceMessage: "Không Tồn Tại Bản Ghi Nào",
+      editRow: {
+        deleteText: `Bạn có muốn xoá sinh viên này?`,
+      },
     },
   }
   const title = `Danh Sách Lớp`
