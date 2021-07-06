@@ -28,6 +28,9 @@ function ClassAdd() {
 
   // -effect
   useEffect(() => {
+    document.title = "Thêm Lớp"
+  }, [])
+  useEffect(() => {
     getSessions()
       .then((fetchedSessions) => {
         setSessions(fetchedSessions.data)
@@ -122,7 +125,7 @@ function ClassAdd() {
 
   return (
     <div>
-      <h1 className="h3 mb-4 text-gray-800">Thêm Lớp</h1>
+      <h1>Thêm Lớp</h1>
       <form onSubmit={onSubmit}>
         <div className="form-group">
           Tên Lớp

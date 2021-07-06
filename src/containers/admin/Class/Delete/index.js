@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import useStateWithLabel from "../../../../helpers/useStateWithLabel"
 import useAuthRequest from "../../../../helpers/useAuthRequest"
-import Editable from "./EditTable"
+import Editable from "./DeleteTable"
 
 function ClassEdit() {
   // state
@@ -25,7 +25,7 @@ function ClassEdit() {
     )
 
   useEffect(() => {
-    document.title = "Sửa Lớp"
+    document.title = "Xoá Lớp"
   }, [])
   useEffect(() => {
     Promise.all([getSessionPromise(), getDepartmentPromise()]).then(
@@ -100,7 +100,7 @@ function ClassEdit() {
     ))
   return (
     <div>
-      <h1>Sửa Lớp</h1>
+      <h1>Xoá Lớp</h1>
       <form onSubmit={onFind}>
         <div className="form-group">
           Khoá

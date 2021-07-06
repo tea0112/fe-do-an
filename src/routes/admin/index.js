@@ -5,6 +5,7 @@ import PrivateRouteAdmin from "../PrivateRouteAdmin"
 import AddStudent from "../../containers/admin/Student/Add"
 import AddClass from "../../containers/admin/Class/Add"
 import EditClass from "../../containers/admin/Class/Edit"
+import DeleteClass from "../../containers/admin/Class/Delete"
 import NotFound from "../../components/404"
 import EditStudent from "../../containers/admin/Student/Edit"
 import DeleteStudent from "../../containers/admin/Student/Delete"
@@ -23,7 +24,7 @@ function AdminRoute() {
       {/* class */}
       <PrivateRouteAdmin path="/admin/lop/them" component={AddClass} />
       <PrivateRouteAdmin path="/admin/lop/sua" component={EditClass} />
-      <PrivateRouteAdmin path="/admin/lop/xoa" component={DeleteStudent} />
+      <PrivateRouteAdmin path="/admin/lop/xoa" component={DeleteClass} />
       <PrivateRouteAdmin
         path="/admin/lop/them-sinh-vien"
         component={AddStudent}
