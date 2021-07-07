@@ -11,6 +11,8 @@ import RemoveStudentClass from "../../containers/admin/Class/StudentRemove"
 import NotFound from "../../components/404"
 import EditStudent from "../../containers/admin/Student/Edit"
 import DeleteStudent from "../../containers/admin/Student/Delete"
+import SessionComponent from "../../containers/admin/Session/Add"
+import SessionEdit from "../../containers/admin/Session/Edit"
 
 function AdminRoute() {
   return (
@@ -35,6 +37,13 @@ function AdminRoute() {
         path="/admin/lop/xoa-sinh-vien"
         component={RemoveStudentClass}
       />
+      {/* session */}
+      <PrivateRouteAdmin
+        path="/admin/nien-khoa/them"
+        component={SessionComponent}
+      />
+      <PrivateRouteAdmin path="/admin/nien-khoa/sua" component={SessionEdit} />
+
       <Route component={NotFound} />
     </Switch>
   )

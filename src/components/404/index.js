@@ -8,7 +8,7 @@ function NotFound() {
           <div className="error mx-auto" data-text="404">
             404
           </div>
-          <p className="lead text-gray-800 mb-5">Trang Không Tồn Tại</p>
+          <p className="lead text-gray-800 mb-5">Đường Dẫn Không Tồn Tại</p>
           <button
             className="btn btn-success m-1"
             type="button"

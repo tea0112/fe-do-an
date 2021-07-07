@@ -135,6 +135,7 @@ function Navbar() {
               <span className="mr-2 d-none d-lg-inline text-gray-600 small" />
               <img
                 className="img-profile rounded-circle"
+                style={{ height: "4rem", width: "4rem" }}
                 src={adminUser}
                 alt="avatar"
               />

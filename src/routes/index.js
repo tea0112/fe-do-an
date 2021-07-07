@@ -8,6 +8,8 @@ import deepFreeze from "../helpers/deepFreeze"
 import Login from "../containers/Login"
 import NotFound from "../components/404"
 import isTokenExpired from "../helpers/isTokenExpired"
+import "../helpers/static/pages/sbadmin2/css/sb-admin-2.min.css"
+import "../helpers/static/pages/sbadmin2/vendor/fontawesome-free/css/all.min.css"
 
 function AppRoute() {
   const location = useLocation()
