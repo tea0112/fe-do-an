@@ -13,6 +13,7 @@ import EditStudent from "../../containers/admin/Student/Edit"
 import DeleteStudent from "../../containers/admin/Student/Delete"
 import SessionComponent from "../../containers/admin/Session/Add"
 import SessionEdit from "../../containers/admin/Session/Edit"
+import SessionDelete from "../../containers/admin/Session/Delete"
 
 function AdminRoute() {
   return (
@@ -43,6 +44,10 @@ function AdminRoute() {
         component={SessionComponent}
       />
       <PrivateRouteAdmin path="/admin/nien-khoa/sua" component={SessionEdit} />
+      <PrivateRouteAdmin
+        path="/admin/nien-khoa/xoa"
+        component={SessionDelete}
+      />
 
       <Route component={NotFound} />
     </Switch>
