@@ -1,9 +1,9 @@
 import { memo, useEffect } from "react"
 import _ from "lodash"
 import useStateWithLabel from "../../../../../helpers/useStateWithLabel"
-import FormError from "../../../../../components/FormError"
+import FormError from "../../../../../components/FormError/FormError"
 
-function ReTypePassword(props) {
+function AddReTypePassword(props) {
   const [reTypePassword, setReTypePassword] = useStateWithLabel(
     "",
     "reTypePassword"
@@ -52,4 +52,4 @@ function ReTypePassword(props) {
 function propsAreEqual(prv, nxt) {
   return _.isEqual(prv.password, nxt.password)
 }
-export default memo(ReTypePassword, propsAreEqual)
+export default memo(AddReTypePassword, propsAreEqual)

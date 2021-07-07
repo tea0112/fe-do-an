@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import useAuthRequest from "../../../../helpers/useAuthRequest"
 
-function AddClass() {
+function ClassroomAdd() {
   useEffect(() => {
     document.title = "Thêm Sinh Viên Vào Lớp"
   }, [])
@@ -101,4 +101,4 @@ function AddClass() {
   )
 }
 
-export default AddClass
+export default ClassroomAdd

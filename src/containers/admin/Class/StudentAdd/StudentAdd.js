@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import useAuthRequest from "../../../../helpers/useAuthRequest"
 import TableAdd from "./TableAdd"
 
-function StudentAdd() {
+function ClassStudentAdd() {
   const [students, setStudents] = useState(null)
   const [sessions, setSessions] = useState(null)
   const [classes, setClasses] = useState(null)
@@ -90,4 +90,4 @@ function StudentAdd() {
   )
 }
 
-export default StudentAdd
+export default ClassStudentAdd

@@ -3,7 +3,7 @@ import useStateWithLabel from "../../../../helpers/useStateWithLabel"
 import useAuthRequest from "../../../../helpers/useAuthRequest"
 import Editable from "./DeleteTable"
 
-function ClassEdit() {
+function ClassDelete() {
   // state
   const [isLoading, setIsLoading] = useStateWithLabel(true, "isLoading")
   const [sessions, setSessions] = useStateWithLabel(null, "sessions")
@@ -144,4 +144,4 @@ function ClassEdit() {
   )
 }
 
-export default ClassEdit
+export default ClassDelete

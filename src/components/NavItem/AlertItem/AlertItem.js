@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-function NavItemAlert({ time, title, fontawesomeIcon, iconBackground }) {
+function NavAlertItem({ time, title, fontawesomeIcon, iconBackground }) {
   return (
     <Link className="dropdown-item d-flex align-items-center" href="#">
       <div className="mr-3">
@@ -16,4 +16,4 @@ function NavItemAlert({ time, title, fontawesomeIcon, iconBackground }) {
   )
 }
 
-export default NavItemAlert
+export default NavAlertItem

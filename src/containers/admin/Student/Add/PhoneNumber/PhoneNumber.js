@@ -1,9 +1,9 @@
 import { memo, useEffect } from "react"
 import _ from "lodash"
 import useStateWithLabel from "../../../../../helpers/useStateWithLabel"
-import FormError from "../../../../../components/FormError"
+import FormError from "../../../../../components/FormError/FormError"
 
-function PhoneNumber(props) {
+function AddPhoneNumber(props) {
   const [phoneNumber, setPhoneNumber] = useStateWithLabel("", "phoneNumber")
   const [isValid, setIsValid] = useStateWithLabel(true, "isValid")
   const [errorMessage, setErrorMessage] = useStateWithLabel("", "errorMessage")
@@ -48,6 +48,6 @@ function PhoneNumber(props) {
   )
 }
 
-export default memo(PhoneNumber, (prev, next) =>
+export default memo(AddPhoneNumber, (prev, next) =>
   _.isEqual(prev.phoneNumber, next.phoneNumber)
 )

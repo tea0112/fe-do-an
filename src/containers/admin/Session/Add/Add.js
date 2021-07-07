@@ -2,9 +2,9 @@ import { useEffect } from "react"
 import useStateWithLabel from "../../../../helpers/useStateWithLabel"
 import useAuthRequest from "../../../../helpers/useAuthRequest"
 import removeAscent from "../../../../helpers/removeAscent"
-import FormError from "../../../../components/FormError"
+import FormError from "../../../../components/FormError/FormError"
 
-function SessionComponent() {
+function SessionAdd() {
   const authRequest = useAuthRequest()
 
   const [sessionNameInput, setSessionNameInput] = useStateWithLabel(
@@ -83,4 +83,4 @@ function SessionComponent() {
   )
 }
 
-export default SessionComponent
+export default SessionAdd

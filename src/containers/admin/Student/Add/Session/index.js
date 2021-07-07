@@ -2,10 +2,10 @@ import { memo, useEffect } from "react"
 import _ from "lodash"
 import axios from "axios"
 import useStateWithLabel from "../../../../../helpers/useStateWithLabel"
-import FormError from "../../../../../components/FormError"
-import SessionOptions from "../../../../../components/BasicOption"
+import FormError from "../../../../../components/FormError/FormError"
+import SessionOptions from "../../../../../components/BasicOption/BasicOption"
 
-function Session(props) {
+function AddSession(props) {
   const [session, setSession] = useStateWithLabel(null, "session")
   const [options, setOptions] = useStateWithLabel(null, "session options")
   const [isValid, setIsValid] = useStateWithLabel(true, "isValid")
@@ -61,4 +61,6 @@ function Session(props) {
   )
 }
 
-export default memo(Session, (prv, nxt) => _.isEqual(prv.session, nxt.session))
+export default memo(AddSession, (prv, nxt) =>
+  _.isEqual(prv.session, nxt.session)
+)

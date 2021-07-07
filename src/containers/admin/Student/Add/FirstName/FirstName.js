@@ -1,20 +1,20 @@
 import { memo, useEffect } from "react"
 import _ from "lodash"
 import useStateWithLabel from "../../../../../helpers/useStateWithLabel"
-import FormError from "../../../../../components/FormError"
+import FormError from "../../../../../components/FormError/FormError"
 import removeAscent from "../../../../../helpers/removeAscent"
 
-function LastName(props) {
-  const [lastName, setLastName] = useStateWithLabel("", "lastName")
+function AddFirstName(props) {
+  const [firstName, setFirstName] = useStateWithLabel("", "firstName")
   const [isValid, setIsValid] = useStateWithLabel(true, "isValid")
   const [errorMessage, setErrorMessage] = useStateWithLabel("", "errorMessage")
   useEffect(() => {
-    props.onLastNameChildChange({
-      value: lastName,
+    props.onFirstNameChildChange({
+      value: firstName,
       isValid,
       errorMessage,
     })
-  }, [lastName])
+  }, [firstName])
 
   const validateInput = (text) => {
     const regex = new RegExp("^[a-zA-Z\\s]*$")
@@ -23,33 +23,31 @@ function LastName(props) {
       setErrorMessage("")
     } else {
       setIsValid(false)
-      setErrorMessage("Tên sinh viên chỉ cho phép là chữ, không để trống")
+      setErrorMessage("Họ sinh viên chỉ cho phép là chữ, không để trống")
     }
   }
 
-  const onLastNameChange = (e) => {
-    setLastName(e.target.value.toLowerCase())
+  const onFirstNameChange = (e) => {
+    setFirstName(e.target.value.toLowerCase())
     validateInput(e.target.value.toLowerCase())
   }
 
   return (
     <div className="form-group">
-      Tên Sinh Viên
+      Họ Sinh Viên
       <input
-        value={lastName}
-        onChange={onLastNameChange}
+        value={firstName}
+        onChange={onFirstNameChange}
         type="text"
         className="form-control"
-        id="lastNameInput"
+        id="firstNameInput"
         autoComplete="off"
       />
-      <FormError isValid={isValid} errorMessage={errorMessage} />
+      <FormError errorMessage={errorMessage} />
     </div>
   )
 }
 
-function propsAreEqual(prev, next) {
-  return _.isEqual(prev.lastName, next.lastName)
-}
-
-export default memo(LastName, propsAreEqual)
+export default memo(AddFirstName, (prev, next) =>
+  _.isEqual(prev.onFirstNameChildChange, next.onFirstNameChildChange)
+)

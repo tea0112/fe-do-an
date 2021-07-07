@@ -1,9 +1,9 @@
 import { memo, useEffect } from "react"
 import _ from "lodash"
 import useStateWithLabel from "../../../../../helpers/useStateWithLabel"
-import FormError from "../../../../../components/FormError"
+import FormError from "../../../../../components/FormError/FormError"
 
-function Birth(props) {
+function AddBirth(props) {
   const [birth, setBirth] = useStateWithLabel("", "birth")
   const [isValid, setIsValid] = useStateWithLabel(true, "isValid")
   const [errorMessage, setErrorMessage] = useStateWithLabel("", "errorMessage")
@@ -39,4 +39,4 @@ function Birth(props) {
 function birthPropsAreEqual(prevProps, nextProps) {
   return _.isEqual(prevProps.onBirthChildChange, nextProps.onBirthChildChange)
 }
-export default memo(Birth, birthPropsAreEqual)
+export default memo(AddBirth, birthPropsAreEqual)

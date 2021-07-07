@@ -1,8 +1,8 @@
 import { useEffect } from "react"
 import useStateWithLabel from "../../../../../helpers/useStateWithLabel"
-import FormError from "../../../../../components/FormError"
+import FormError from "../../../../../components/FormError/FormError"
 
-function Gender({ onGenderChildChange }) {
+function AddGender({ onGenderChildChange }) {
   const [gender, setGender] = useStateWithLabel("0", "gender")
   const [isValid] = useStateWithLabel(true, "isValid")
   const [errorMessage] = useStateWithLabel("", "errorMessage")
@@ -36,4 +36,4 @@ function Gender({ onGenderChildChange }) {
   )
 }
 
-export default Gender
+export default AddGender

@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import useStateWithLabel from "../../../../../helpers/useStateWithLabel"
-import FormError from "../../../../../components/FormError"
+import FormError from "../../../../../components/FormError/FormError"
 
 function StudentNumber({ onStudentNumberChildChange }) {
   const [studentNumber, setStudentNumber] = useStateWithLabel(

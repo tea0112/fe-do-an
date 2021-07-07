@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
-import NavItem from "../NavItem"
-import CollapseLinkItem from "../CollapseLinkItem"
+import NavItem from "../NavItem/NavItem"
+import CollapseLinkItem from "../CollapseLinkItem/CollapseLinkItem"
 
 function Sidebar() {
   return (

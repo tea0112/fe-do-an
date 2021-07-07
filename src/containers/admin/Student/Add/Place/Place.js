@@ -1,9 +1,9 @@
 import { memo, useEffect } from "react"
 import _ from "lodash"
 import useStateWithLabel from "../../../../../helpers/useStateWithLabel"
-import FormError from "../../../../../components/FormError"
+import FormError from "../../../../../components/FormError/FormError"
 
-function Place(props) {
+function AddPlace(props) {
   const [place, setPlace] = useStateWithLabel("", "place")
   const [isValid, setIsValid] = useStateWithLabel(true, "isValid")
   const [errorMessage, setErrorMessage] = useStateWithLabel("", "errorMessage")
@@ -38,4 +38,4 @@ function Place(props) {
   )
 }
 
-export default memo(Place, (prv, nxt) => _.isEqual(prv.place, nxt.place))
+export default memo(AddPlace, (prv, nxt) => _.isEqual(prv.place, nxt.place))

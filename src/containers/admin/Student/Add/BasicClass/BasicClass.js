@@ -1,10 +1,10 @@
 import { useEffect } from "react"
 import axios from "axios"
 import useStateWithLabel from "../../../../../helpers/useStateWithLabel"
-import FormError from "../../../../../components/FormError"
-import BasicClassOptions from "../../../../../components/BasicOption"
+import FormError from "../../../../../components/FormError/FormError"
+import BasicClassOptions from "../../../../../components/BasicOption/BasicOption"
 
-function BasicClass(props) {
+function AddBasicClass(props) {
   const [basicClass, setBasicClass] = useStateWithLabel("", "basicClass")
   const [options, setOptions] = useStateWithLabel(null, "basicClass options")
   const [isValid, setIsValid] = useStateWithLabel(true, "isValid")
@@ -67,4 +67,4 @@ function BasicClass(props) {
   )
 }
 
-export default BasicClass
+export default AddBasicClass

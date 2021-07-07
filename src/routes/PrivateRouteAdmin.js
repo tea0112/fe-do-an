@@ -1,9 +1,9 @@
 import { Redirect, Route } from "react-router-dom"
 import React, { useEffect } from "react"
 import { useSelector } from "react-redux"
-import Sidebar from "../components/Sidebar"
+import Sidebar from "../components/Sidebar/Sidebar"
 import Navbar from "../containers/Navbar"
-import LogoutModal from "../components/LogoutModal"
+import LogoutModal from "../components/LogoutModal/LogoutModal"
 import deepFreeze from "../helpers/deepFreeze"
 import customScriptSbAdmin from "../helpers/static/pages/sbadmin2/js/sb-admin-2"
 
