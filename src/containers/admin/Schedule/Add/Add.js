@@ -228,9 +228,12 @@ function ScheduleAdd() {
           "Content-Type": "application/json",
         },
       })
-      // eslint-disable-next-line no-console
-      console.log(response.data)
-      window.alert("Thêm Thời Khoá Biểu Thành Công!")
+      console.log(response.data.message)
+      if (response.data.message) {
+        window.alert(`Thêm Thời Khoá Biểu Thất Bại. ${response.data.message}`)
+      } else {
+        window.alert("Thêm Thời Khoá Biểu Thành Công!")
+      }
     } catch (err) {
       // eslint-disable-next-line no-console
       console.log(err)
