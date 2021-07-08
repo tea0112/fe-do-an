@@ -24,7 +24,7 @@ function Edit() {
   const getDepartmentPromise = () => axiosAuthRequest.get("/api/departments")
   const getClasses = (sessionId, departmentId) =>
     axiosAuthRequest.get(
-      `/api/classes?session=${sessionId}&department=${departmentId}`
+      `/api/classes?sessionId=${sessionId}&departmentId=${departmentId}`
     )
   const getStudents = (classId) =>
     axiosAuthRequest.get(`/api/admin/students?classId=${classId}`)

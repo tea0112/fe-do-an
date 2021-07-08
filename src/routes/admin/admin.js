@@ -17,6 +17,7 @@ import SessionDelete from "../../containers/admin/Session/Delete/Delete"
 import ScheduleAdd from "../../containers/admin/Schedule/Add/Add"
 import ScheduleEdit from "../../containers/admin/Schedule/Edit/Edit"
 import ScheduleEditId from "../../containers/admin/Schedule/Edit/Id/Id"
+import ScheduleDelete from "../../containers/admin/Schedule/Delete/Delete"
 
 function AdminRoute() {
   return (
@@ -71,7 +72,7 @@ function AdminRoute() {
       />
       <PrivateRouteAdmin
         path="/admin/thoi-khoa-bieu/xoa"
-        component={SessionDelete}
+        component={ScheduleDelete}
       />
 
       {/* Not Found Page */}
