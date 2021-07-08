@@ -108,7 +108,6 @@ function Editable({ sessions, setSessions }) {
                   dataUpdate[index] = {
                     ...refactoredNewData,
                   }
-                  console.log("dataUpdate: ", dataUpdate)
                   setSessions([...dataUpdate])
                   resolve()
                 })

@@ -21,7 +21,7 @@ function ClassEdit() {
   const getDepartmentPromise = () => authRequest.get("/api/departments")
   const getClasses = (sessionId, departmentId) =>
     authRequest.get(
-      `/api/classes?session=${sessionId}&department=${departmentId}`
+      `/api/classes?sessionId=${sessionId}&departmentId=${departmentId}`
     )
 
   useEffect(() => {

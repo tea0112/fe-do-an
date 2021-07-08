@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import useStateWithLabel from "../../../../helpers/useStateWithLabel"
-import BasicOption from "../../../../components/BasicOption/BasicOption"
+import BasicOption from "../../../../components/admin/form/BasicOption/BasicOption"
 import useAuthRequest from "../../../../helpers/useAuthRequest"
 
 function ScheduleAdd() {
@@ -77,7 +77,7 @@ function ScheduleAdd() {
     authRequest.get(`/api/semesters?sessionId=${sessionId}`)
   const getClassesWithDepartmentAndSession = (departmentId, sessionId) =>
     authRequest.get(
-      `/api/admin/classes?departmentId=${departmentId}&sessionId=${sessionId}`
+      `/api/classes?departmentId=${departmentId}&sessionId=${sessionId}`
     )
   const getAllLectureHalls = () => authRequest.get(`/api/lecturerHalls`)
   const getClassroomsWithLecturerHalls = (lectureHallId) =>
@@ -228,7 +228,6 @@ function ScheduleAdd() {
           "Content-Type": "application/json",
         },
       })
-      console.log(response.data.message)
       if (response.data.message) {
         window.alert(`Thêm Thời Khoá Biểu Thất Bại. ${response.data.message}`)
       } else {

@@ -15,6 +15,8 @@ import SessionComponent from "../../containers/admin/Session/Add/Add"
 import SessionEdit from "../../containers/admin/Session/Edit/Edit"
 import SessionDelete from "../../containers/admin/Session/Delete/Delete"
 import ScheduleAdd from "../../containers/admin/Schedule/Add/Add"
+import ScheduleEdit from "../../containers/admin/Schedule/Edit/Edit"
+import ScheduleEditId from "../../containers/admin/Schedule/Edit/Id/Id"
 
 function AdminRoute() {
   return (
@@ -59,8 +61,13 @@ function AdminRoute() {
         component={ScheduleAdd}
       />
       <PrivateRouteAdmin
+        exact
         path="/admin/thoi-khoa-bieu/sua"
-        component={SessionEdit}
+        component={ScheduleEdit}
+      />
+      <PrivateRouteAdmin
+        path="/admin/thoi-khoa-bieu/sua/:scheduleId"
+        component={ScheduleEditId}
       />
       <PrivateRouteAdmin
         path="/admin/thoi-khoa-bieu/xoa"

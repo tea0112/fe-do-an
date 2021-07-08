@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import axios from "axios"
 import useStateWithLabel from "../../../../../helpers/useStateWithLabel"
 import FormError from "../../../../../components/FormError/FormError"
-import BasicClassOptions from "../../../../../components/BasicOption/BasicOption"
+import BasicClassOptions from "../../../../../components/admin/form/BasicOption/BasicOption"
 
 function AddBasicClass(props) {
   const [basicClass, setBasicClass] = useStateWithLabel("", "basicClass")
