@@ -21,6 +21,9 @@ import ScheduleDelete from "../../containers/admin/Schedule/Delete/Delete"
 import SubjectAdd from "../../containers/admin/Subject/Add/Add"
 import SubjectEdit from "../../containers/admin/Subject/Edit/Edit"
 import SubjectDelete from "../../containers/admin/Subject/Delete/Delete"
+import LecturerAdd from "../../containers/admin/Lecturer/Add/Add"
+import LecturerEdit from "../../containers/admin/Lecturer/Edit/Edit"
+import LecturerDelete from "../../containers/admin/Lecturer/Delete/Delete"
 
 function AdminRoute() {
   return (
@@ -82,6 +85,20 @@ function AdminRoute() {
       <PrivateRouteAdmin path="/admin/mon/them" component={SubjectAdd} />
       <PrivateRouteAdmin path="/admin/mon/sua" component={SubjectEdit} />
       <PrivateRouteAdmin path="/admin/mon/xoa" component={SubjectDelete} />
+
+      {/* Lecturer */}
+      <PrivateRouteAdmin
+        path="/admin/giang-vien/them"
+        component={LecturerAdd}
+      />
+      <PrivateRouteAdmin
+        path="/admin/giang-vien/sua"
+        component={LecturerEdit}
+      />
+      <PrivateRouteAdmin
+        path="/admin/giang-vien/xoa"
+        component={LecturerDelete}
+      />
 
       {/* Not Found Page */}
       <Route component={NotFound} />

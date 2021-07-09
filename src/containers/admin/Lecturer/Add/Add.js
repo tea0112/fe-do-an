@@ -1,17 +1,16 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import useAuthRequest from "../../../../helpers/useAuthRequest"
 
-function SubjectAdd() {
+function LecturerAdd() {
   // -state
   const [departments, setDepartments] = useState(null)
-  const [subjectType, setSubjectType] = useState(null)
-  const [departmentInput, setDepartmentInput] = useState("")
-  const [subjectNameInput, setSubjectNameInput] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  // -ref
+  const departmentInputRef = useRef()
+  const lecturerNameInputRef = useRef()
   const authRequest = useAuthRequest()
-
   // -fetch
   const getDepartment = () => authRequest.get("/api/departments")
-
   // -effect
   useEffect(() => {
     getDepartment()
@@ -23,7 +22,6 @@ function SubjectAdd() {
         console.log(err)
       })
   }, [])
-
   // -component
   const departmentOption = (departmentData) =>
     departmentData.map((department) => (
@@ -34,75 +32,54 @@ function SubjectAdd() {
   // -submit
   const onSubmit = (e) => {
     e.preventDefault()
+    setIsLoading(true)
     authRequest({
       method: "POST",
-      url: `/admin/subjects`,
+      url: `/api/admin/lecturers`,
       headers: {
         "Content-Type": "application/json",
       },
       data: {
-        name: subjectNameInput.toLowerCase(),
-        subjectType,
-        departmentId: departmentInput,
+        name: lecturerNameInputRef.current.value,
+        departmentId: departmentInputRef.current.value,
       },
     })
       .then(() => {
-        alert("Thêm Thành Công")
+        setIsLoading(false)
+        alert("Cập Nhật Thành Công")
       })
       .catch((err) => {
+        setIsLoading(false)
+        alert(`Cập Nhật Thất Bại, Không Được Trùng Tên Hoặc Rỗng`)
         // eslint-disable-next-line no-console
         console.log(err)
-        alert("Thêm Thất Bại, Tên Môn Không Được Trùng Hoặc Rỗng")
       })
   }
   // -change
-  const onSubjectTypeChange = (e) => {
-    setSubjectType(e.target.value)
-  }
-  const onDepartmentChange = (e) => {
-    setDepartmentInput(e.target.value)
-  }
-  const onSubjectNameChange = (e) => {
-    setSubjectNameInput(e.target.value)
-  }
   return (
     <div>
-      <h1>Thêm Môn</h1>
+      <h1>Thêm Giảng Viên</h1>
       <form onSubmit={onSubmit}>
         <div className="form-group">
           Khoa
           <select
             className="form-control"
             id="departmentInput"
-            onChange={onDepartmentChange}
-            value={departmentInput}
+            ref={departmentInputRef}
           >
             {departments && departmentOption(departments)}
           </select>
         </div>
         <div className="form-group">
-          Tên Môn
+          Tên Giảng Viên
           <input
             type="text"
-            id="subjectNameInput"
-            value={subjectNameInput}
-            onChange={onSubjectNameChange}
+            id="lecturerNameInput"
+            ref={lecturerNameInputRef}
             className="form-control"
           />
         </div>
-        <div className="form-group">
-          Kiểu Môn
-          <select
-            className="form-control"
-            value={subjectType}
-            id="subjectTypeInput"
-            onChange={onSubjectTypeChange}
-          >
-            <option value="0">lý thuyết</option>
-            <option value="1">thực hành</option>
-          </select>
-        </div>
-        <button type="submit" className="btn btn-primary">
+        <button disabled={isLoading} type="submit" className="btn btn-primary">
           Thêm
         </button>
       </form>
@@ -110,4 +87,4 @@ function SubjectAdd() {
   )
 }
 
-export default SubjectAdd
+export default LecturerAdd
