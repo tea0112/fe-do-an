@@ -1,124 +1,211 @@
-import { useEffect, useState } from "react"
-import BasicSelect from "../../../../components/admin/form/BasicSelect/BasicSelect"
-import BasicOption from "../../../../components/admin/form/BasicOption/BasicOption"
-import BasicButton from "../../../../components/admin/form/BasicButton/BasicButton"
-import EditTable from "./EditTable"
+import { useEffect, useState, useRef } from "react"
 import useAuthRequest from "../../../../helpers/useAuthRequest"
+import deepFreeze from "../../../../helpers/deepFreeze"
 
-function SubjectEdit() {
-  const [state, setState] = useState({
-    subjects: null,
-    departments: null,
-    departmentInput: "",
-    subjectTypeInput: "0",
-    isLoading: false,
-  })
+function SemesterUpdate() {
+  // state
+  const [sessions, setSessions] = useState(null)
+  const [semesters, setSemesters] = useState(null)
+  const [semester, setSemester] = useState(null)
   const authRequest = useAuthRequest()
 
-  const getDepartments = () => authRequest.get("/api/departments")
-  const getSubjects = (subjectType, departmentId) =>
-    authRequest.get(
-      `/api/admin/subjects?subjectType=${subjectType}&departmentId=${departmentId}`
-    )
+  // ref
+  const sessionsRef = useRef(null)
+  const semestersRef = useRef(null)
+  const termNumberChangeInputRef = useRef(null)
+  const startDayChangeInputRef = useRef(null)
+  const endDayChangeInputRef = useRef(null)
+  const sessionChangeRef = useRef(null)
 
-  useEffect(async () => {
-    try {
-      const fetchedDepartments = await getDepartments()
-      setState((prevState) => ({
-        ...prevState,
-        departments: fetchedDepartments.data,
-      }))
-      if (fetchedDepartments.data.length > 0) {
-        setState((prevState) => ({
-          ...prevState,
-          departmentInput: fetchedDepartments.data[0].id,
-        }))
-      }
-    } catch (e) {
+  // fetch
+  const getSessions = () => authRequest.get("/api/admin/sessions")
+  const getSemesters = (sessionId) =>
+    authRequest.get(`/api/semesters?sessionId=${sessionId}`)
+
+  // effect
+  useEffect(() => {
+    getSessions()
+      .then((sessionsData) => {
+        setSessions(deepFreeze(sessionsData.data))
+      })
       // eslint-disable-next-line no-console
-      console.log(e)
-    }
+      .catch((err) => console.log(err))
   }, [])
-
-  const onDepartmentInputChange = (e) => {
-    setState((prevState) => ({ ...prevState, departmentInput: e.target.value }))
-  }
-  const onSubjectTypeInputChange = (e) => {
-    setState((prevState) => ({
-      ...prevState,
-      subjectTypeInput: e.target.value,
-    }))
-  }
-
-  const onSubmit = async (e) => {
-    e.preventDefault()
-    try {
-      setState((prevState) => ({ ...prevState, isLoading: true }))
-      const fetchedSubjects = await getSubjects(
-        state.subjectTypeInput,
-        state.departmentInput
+  useEffect(() => {
+    if (sessions)
+      getSemesters(sessionsRef.current.value)
+        .then((semestersData) => {
+          setSemesters(deepFreeze(semestersData.data))
+        })
+        // eslint-disable-next-line no-console
+        .catch((err) => console.log(err))
+  }, [sessions])
+  useEffect(() => {
+    if (semesters) {
+      semesters.filter(
+        (semesterElm) =>
+          parseInt(semestersRef.current.value, 10) === semesterElm.id &&
+          setSemester(deepFreeze(semesterElm))
       )
-      setState((prevState) => ({
-        ...prevState,
-        subjects: fetchedSubjects.data,
-      }))
-      setState((prevState) => ({ ...prevState, isLoading: false }))
-    } catch (err) {
+    }
+  }, [semesters])
+
+  // change
+  const sessionsInputChange = () => {
+    getSemesters(sessionsRef.current.value)
+      .then((semestersData) => {
+        setSemesters(deepFreeze(semestersData.data))
+      })
       // eslint-disable-next-line no-console
-      console.log(err)
-      setState((prevState) => ({ ...prevState, isLoading: false }))
+      .catch((err) => console.log(err))
+  }
+  const semestersInputChange = () => {
+    if (semesters) {
+      semesters.filter(
+        (semesterElm) =>
+          parseInt(semestersRef.current.value, 10) === semesterElm.id &&
+          setSemester(deepFreeze(semesterElm))
+      )
     }
   }
+
+  // submit
+  const onUpdate = (e) => {
+    e.preventDefault()
+    authRequest({
+      method: "PATCH",
+      url: `/api/admin/semesters/${semester.id}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: {
+        termNumber: termNumberChangeInputRef.current.value,
+        sessionId: sessionChangeRef.current.value,
+        startDay: startDayChangeInputRef.current.value,
+        endDay: endDayChangeInputRef.current.value,
+      },
+    })
+      .then(() => {
+        alert("Cập Nhật Thành Công")
+        window.location.reload()
+      })
+      .catch((err) => {
+        alert(`Cập Nhật Thất Bại ${err}`)
+        window.location.reload()
+      })
+  }
+
+  // component
+  const sessionOption = (sessionData) =>
+    sessionData.map((session) => (
+      <option key={session.id} value={session.id}>
+        {session.name}
+      </option>
+    ))
+  const semesterOption = (semesterData) =>
+    semesterData.map((semesterElm) => (
+      <option key={semesterElm.id} value={semesterElm.id}>
+        {semesterElm.termNumber}
+      </option>
+    ))
   return (
-    <>
-      <h1>Sửa Môn</h1>
-      <form onSubmit={onSubmit}>
-        <BasicSelect
-          id="departmentInput"
-          label="Khoa"
-          value={state.departmentInput}
-          onChange={onDepartmentInputChange}
-        >
-          <BasicOption
-            options={state.departments}
-            valueLabel="id"
-            keyLabel="id"
-            content="name"
-          />
-        </BasicSelect>
-        <BasicSelect
-          id="subjectTypeInput"
-          label="Kiểu Môn"
-          onChange={onSubjectTypeInputChange}
-        >
-          <BasicOption
-            options={[
-              { value: 0, type: "Lý Thuyết" },
-              { value: 1, type: "Thực Hành" },
-            ]}
-            valueLabel="value"
-            keyLabel="value"
-            content="type"
-          />
-        </BasicSelect>
-        <BasicButton
-          type="submit"
-          className="btn btn-primary"
-          disabled={state.isLoading}
-        >
-          Tìm
-        </BasicButton>
+    <div>
+      <h1>Sửa Học Kỳ</h1>
+      <form>
+        <div className="form-group">
+          Khoá
+          <select
+            className="form-control"
+            id="sessionsInput"
+            ref={sessionsRef}
+            onChange={sessionsInputChange}
+          >
+            {sessions && sessionOption(sessions)}
+          </select>
+        </div>
+        <div className="form-group">
+          Học Kỳ
+          <select
+            className="form-control"
+            id="semestersInput"
+            ref={semestersRef}
+            onChange={semestersInputChange}
+          >
+            {semesters && semesterOption(semesters)}
+          </select>
+        </div>
       </form>
       <hr />
-      {state.subjects && state.departments && (
-        <EditTable
-          subjects={state.subjects}
-          setSubjects={setState}
-          departments={state.departments}
-        />
+      <h3>
+        Nhập Thay Đổi Cho:&nbsp;
+        <u>
+          {semester && (
+            <span>
+              Học Kỳ Số {semester.termNumber} - Khoá&nbsp;
+              {semester.session.name}
+            </span>
+          )}
+        </u>
+      </h3>
+      <hr />
+      {semester && (
+        <div key={semester.id}>
+          <form onSubmit={onUpdate}>
+            <div className="form-group">
+              Học Kỳ Số
+              <select
+                className="form-control"
+                id="termNumberChangeInput"
+                defaultValue={semester && semester.termNumber}
+                ref={termNumberChangeInputRef}
+              >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+              </select>
+            </div>
+            <div className="form-group">
+              Ngày Bắt Đầu
+              <input
+                className="form-control"
+                defaultValue={semester.startDay}
+                ref={startDayChangeInputRef}
+                type="date"
+                id="startDayChangeInput"
+              />
+            </div>
+            <div className="form-group">
+              Ngày Kết Thúc
+              <input
+                className="form-control"
+                type="date"
+                defaultValue={semester.endDay}
+                ref={endDayChangeInputRef}
+                id="endDayChangeInput"
+              />
+            </div>
+            <div className="form-group">
+              Khoá
+              <select
+                className="form-control"
+                id="sessionsChangeInput"
+                ref={sessionChangeRef}
+                defaultValue={semester.session.id}
+              >
+                {sessions && sessionOption(sessions)}
+              </select>
+            </div>
+            <button type="submit" className="btn btn-primary">
+              Cập Nhật
+            </button>
+          </form>
+        </div>
       )}
-    </>
+    </div>
   )
 }
 
-export default SubjectEdit
+export default SemesterUpdate
