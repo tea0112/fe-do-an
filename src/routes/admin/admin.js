@@ -18,6 +18,9 @@ import ScheduleAdd from "../../containers/admin/Schedule/Add/Add"
 import ScheduleEdit from "../../containers/admin/Schedule/Edit/Edit"
 import ScheduleEditId from "../../containers/admin/Schedule/Edit/Id/Id"
 import ScheduleDelete from "../../containers/admin/Schedule/Delete/Delete"
+import SubjectAdd from "../../containers/admin/Subject/Add/Add"
+import SubjectEdit from "../../containers/admin/Subject/Edit/Edit"
+import SubjectDelete from "../../containers/admin/Subject/Delete/Delete"
 
 function AdminRoute() {
   return (
@@ -74,6 +77,11 @@ function AdminRoute() {
         path="/admin/thoi-khoa-bieu/xoa"
         component={ScheduleDelete}
       />
+
+      {/* Subject */}
+      <PrivateRouteAdmin path="/admin/mon/them" component={SubjectAdd} />
+      <PrivateRouteAdmin path="/admin/mon/sua" component={SubjectEdit} />
+      <PrivateRouteAdmin path="/admin/mon/xoa" component={SubjectDelete} />
 
       {/* Not Found Page */}
       <Route component={NotFound} />
