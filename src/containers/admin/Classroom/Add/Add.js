@@ -2,26 +2,30 @@ import { useState, useEffect } from "react"
 import useAuthRequest from "../../../../helpers/useAuthRequest"
 
 function ClassroomAdd() {
-  useEffect(() => {
-    document.title = "Thêm Sinh Viên Vào Lớp"
-  }, [])
-  const authRequest = useAuthRequest()
+  // state
   const [state, setState] = useState({
     lectureHalls: null,
     selectedLectureHall: null,
     classRoomNameInput: "",
   })
+  const authRequest = useAuthRequest()
 
   const getAllLecturerHalls = () => authRequest.get(`/api/lecturerHalls`)
 
   // effect
   useEffect(async () => {
     const lectureHalls = await getAllLecturerHalls()
-    setState({ ...state, lectureHalls: lectureHalls.data })
+    setState((prevState) => ({
+      ...prevState,
+      lectureHalls: lectureHalls.data,
+    }))
   }, [])
   useEffect(async () => {
     if (state.lectureHalls) {
-      setState({ ...state, selectedLectureHall: state.lectureHalls[0].id })
+      setState((prevState) => ({
+        ...prevState,
+        selectedLectureHall: state.lectureHalls[0].id,
+      }))
     }
   }, [state.lectureHalls])
 
@@ -41,9 +45,9 @@ function ClassroomAdd() {
       })
       alert("Thêm Thành Công")
       window.location.reload()
-    } catch (err) {
+    } catch (e) {
       // eslint-disable-next-line no-console
-      console.log(err)
+      console.log(e)
       alert("Thêm Thất Bại")
       window.location.reload()
     }
@@ -52,15 +56,26 @@ function ClassroomAdd() {
   // on
   const onSubmit = (e) => {
     e.preventDefault()
-    addClassroomRequest()
+    addClassroomRequest().then(() => {
+      setState((prevState) => ({
+        ...prevState,
+        classRoomNameInput: e.target.value,
+      }))
+    })
   }
 
   // handle
   const handleClassroomNameInputChange = (e) => {
-    setState({ ...state, classRoomNameInput: e.target.value })
+    setState((prevState) => ({
+      ...prevState,
+      classRoomNameInput: e.target.value,
+    }))
   }
   const handleSelectLectureHall = (e) => {
-    setState({ ...state, selectedLectureHall: e.target.value })
+    setState((prevState) => ({
+      ...prevState,
+      selectedLectureHall: e.target.value,
+    }))
   }
 
   // component
@@ -73,6 +88,7 @@ function ClassroomAdd() {
 
   return (
     <div>
+      <h1>Thêm Phòng Học</h1>
       <form onSubmit={onSubmit}>
         <div className="form-group">
           <div>Chọn Giảng Đường</div>
