@@ -27,6 +27,9 @@ import LecturerDelete from "../../containers/admin/Lecturer/Delete/Delete"
 import SemesterAdd from "../../containers/admin/Semester/Add/Add"
 import SemesterEdit from "../../containers/admin/Semester/Edit/Edit"
 import SemesterDelete from "../../containers/admin/Semester/Delete/Delete"
+import DepartmentAdd from "../../containers/admin/Department/Add/Add"
+import DepartmentEdit from "../../containers/admin/Department/Edit/Edit"
+import DepartmentDelete from "../../containers/admin/Department/Delete/Delete"
 
 function AdminRoute() {
   return (
@@ -107,6 +110,11 @@ function AdminRoute() {
       <PrivateRouteAdmin path="/admin/hoc-ky/them" component={SemesterAdd} />
       <PrivateRouteAdmin path="/admin/hoc-ky/sua" component={SemesterEdit} />
       <PrivateRouteAdmin path="/admin/hoc-ky/xoa" component={SemesterDelete} />
+
+      {/* Department */}
+      <PrivateRouteAdmin path="/admin/khoa/them" component={DepartmentAdd} />
+      <PrivateRouteAdmin path="/admin/khoa/sua" component={DepartmentEdit} />
+      <PrivateRouteAdmin path="/admin/khoa/xoa" component={DepartmentDelete} />
 
       {/* Not Found Page */}
       <Route component={NotFound} />
