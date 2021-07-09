@@ -133,6 +133,20 @@ function AdminRoute() {
         component={LectureHallDelete}
       />
 
+      {/* LectureHall */}
+      <PrivateRouteAdmin
+        path="/admin/giang-duong/them"
+        component={LectureHallAdd}
+      />
+      <PrivateRouteAdmin
+        path="/admin/giang-duong/sua"
+        component={LectureHallEdit}
+      />
+      <PrivateRouteAdmin
+        path="/admin/giang-duong/xoa"
+        component={LectureHallDelete}
+      />
+
       {/* Not Found Page */}
       <Route component={NotFound} />
     </Switch>
