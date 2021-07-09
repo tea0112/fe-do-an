@@ -1,209 +1,131 @@
 import { useEffect, useState, useRef } from "react"
 import useAuthRequest from "../../../../helpers/useAuthRequest"
-import deepFreeze from "../../../../helpers/deepFreeze"
 
 function SemesterUpdate() {
   // state
-  const [sessions, setSessions] = useState(null)
-  const [semesters, setSemesters] = useState(null)
-  const [semester, setSemester] = useState(null)
+  const [departments, setDepartments] = useState(null)
+  const [choseDepartment, setChoseDepartment] = useState(null)
   const authRequest = useAuthRequest()
 
   // ref
-  const sessionsRef = useRef(null)
-  const semestersRef = useRef(null)
-  const termNumberChangeInputRef = useRef(null)
-  const startDayChangeInputRef = useRef(null)
-  const endDayChangeInputRef = useRef(null)
-  const sessionChangeRef = useRef(null)
-
-  // fetch
-  const getSessions = () => authRequest.get("/api/admin/sessions")
-  const getSemesters = (sessionId) =>
-    authRequest.get(`/api/semesters?sessionId=${sessionId}`)
+  const departmentNameSelectRef = useRef(null)
+  const changedNameRef = useRef(null)
+  const changedGeneralCheckRef = useRef(null)
 
   // effect
-  useEffect(() => {
-    getSessions()
-      .then((sessionsData) => {
-        setSessions(deepFreeze(sessionsData.data))
-      })
+  useEffect(async () => {
+    try {
+      const response = await authRequest.get("/api/departments")
+      setDepartments(response.data)
+    } catch (err) {
       // eslint-disable-next-line no-console
-      .catch((err) => console.log(err))
+      console.log(err)
+    }
   }, [])
   useEffect(() => {
-    if (sessions)
-      getSemesters(sessionsRef.current.value)
-        .then((semestersData) => {
-          setSemesters(deepFreeze(semestersData.data))
-        })
-        // eslint-disable-next-line no-console
-        .catch((err) => console.log(err))
-  }, [sessions])
-  useEffect(() => {
-    if (semesters) {
-      semesters.filter(
-        (semesterElm) =>
-          parseInt(semestersRef.current.value, 10) === semesterElm.id &&
-          setSemester(deepFreeze(semesterElm))
+    if (departments) {
+      setChoseDepartment(
+        departments.find(
+          (d) => d.id === parseInt(departmentNameSelectRef.current.value, 10)
+        )
       )
     }
-  }, [semesters])
+  }, [departments])
 
   // change
-  const sessionsInputChange = () => {
-    getSemesters(sessionsRef.current.value)
-      .then((semestersData) => {
-        setSemesters(deepFreeze(semestersData.data))
-      })
-      // eslint-disable-next-line no-console
-      .catch((err) => console.log(err))
-  }
-  const semestersInputChange = () => {
-    if (semesters) {
-      semesters.filter(
-        (semesterElm) =>
-          parseInt(semestersRef.current.value, 10) === semesterElm.id &&
-          setSemester(deepFreeze(semesterElm))
+  const changingDepartmentNameSelect = () => {
+    if (departments) {
+      setChoseDepartment(
+        departments.find(
+          (d) => d.id === parseInt(departmentNameSelectRef.current.value, 10)
+        )
       )
     }
-  }
-
-  // submit
-  const onUpdate = (e) => {
-    e.preventDefault()
-    authRequest({
-      method: "PATCH",
-      url: `/api/admin/semesters/${semester.id}`,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: {
-        termNumber: termNumberChangeInputRef.current.value,
-        sessionId: sessionChangeRef.current.value,
-        startDay: startDayChangeInputRef.current.value,
-        endDay: endDayChangeInputRef.current.value,
-      },
-    })
-      .then(() => {
-        alert("Cập Nhật Thành Công")
-        window.location.reload()
-      })
-      .catch((err) => {
-        alert(`Cập Nhật Thất Bại ${err}`)
-        window.location.reload()
-      })
   }
 
   // component
-  const sessionOption = (sessionData) =>
-    sessionData.map((session) => (
-      <option key={session.id} value={session.id}>
-        {session.name}
+  const departmentOptions = (departmentsData) =>
+    departmentsData.map((e) => (
+      <option value={e.id} key={e.id}>
+        {e.name}
       </option>
     ))
-  const semesterOption = (semesterData) =>
-    semesterData.map((semesterElm) => (
-      <option key={semesterElm.id} value={semesterElm.id}>
-        {semesterElm.termNumber}
-      </option>
-    ))
+  const choseDepartmentFormChanging = (chosenDepartment) => (
+    <div>
+      ID
+      <input
+        className="form-control"
+        type="text"
+        value={chosenDepartment.id}
+        disabled
+      />
+      Tên Khoa
+      <input
+        type="text"
+        className="form-control"
+        key={chosenDepartment.id}
+        ref={changedNameRef}
+        defaultValue={chosenDepartment.name}
+      />
+      <div className="form-group form-check">
+        <input
+          key={chosenDepartment.id}
+          type="checkbox"
+          className="form-check-input"
+          id="changedGeneralCheck"
+          ref={changedGeneralCheckRef}
+          defaultChecked={chosenDepartment.isGeneral}
+        />
+        Là Khoa Cơ Bản
+      </div>
+    </div>
+  )
+
+  // submit
+  const onSubmit = async (e) => {
+    e.preventDefault()
+    if (choseDepartment) {
+      try {
+        await authRequest({
+          url: `/api/admin/departments/${choseDepartment.id}`,
+          method: "PATCH",
+          headers: {
+            "content-type": "application/json",
+          },
+          data: {
+            name: changedNameRef.current.value,
+            isGeneral: changedGeneralCheckRef.current.checked,
+          },
+        })
+        alert("Cập Nhật Thành Công")
+        window.location.reload()
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.log(err)
+        alert("Cập Nhật Thất Bại")
+        window.location.reload()
+      }
+    }
+  }
   return (
     <div>
-      <h1>Sửa Học Kỳ</h1>
-      <form>
+      <h1>Sửa Khoa</h1>
+      <form onSubmit={onSubmit}>
         <div className="form-group">
-          Khoá
           <select
+            ref={departmentNameSelectRef}
             className="form-control"
-            id="sessionsInput"
-            ref={sessionsRef}
-            onChange={sessionsInputChange}
+            id="departmentNameSelect"
+            onChange={changingDepartmentNameSelect}
           >
-            {sessions && sessionOption(sessions)}
+            {departments && departmentOptions(departments)}
           </select>
         </div>
-        <div className="form-group">
-          Học Kỳ
-          <select
-            className="form-control"
-            id="semestersInput"
-            ref={semestersRef}
-            onChange={semestersInputChange}
-          >
-            {semesters && semesterOption(semesters)}
-          </select>
-        </div>
+        {choseDepartment && choseDepartmentFormChanging(choseDepartment)}
+        <button type="submit" className="btn btn-primary">
+          Cập Nhật
+        </button>
       </form>
-      <hr />
-      <h3>
-        Nhập Thay Đổi Cho:&nbsp;
-        <u>
-          {semester && (
-            <span>
-              Học Kỳ Số {semester.termNumber} - Khoá&nbsp;
-              {semester.session.name}
-            </span>
-          )}
-        </u>
-      </h3>
-      <hr />
-      {semester && (
-        <div key={semester.id}>
-          <form onSubmit={onUpdate}>
-            <div className="form-group">
-              Học Kỳ Số
-              <select
-                className="form-control"
-                id="termNumberChangeInput"
-                defaultValue={semester && semester.termNumber}
-                ref={termNumberChangeInputRef}
-              >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-              </select>
-            </div>
-            <div className="form-group">
-              Ngày Bắt Đầu
-              <input
-                className="form-control"
-                defaultValue={semester.startDay}
-                ref={startDayChangeInputRef}
-                type="date"
-                id="startDayChangeInput"
-              />
-            </div>
-            <div className="form-group">
-              Ngày Kết Thúc
-              <input
-                className="form-control"
-                type="date"
-                defaultValue={semester.endDay}
-                ref={endDayChangeInputRef}
-                id="endDayChangeInput"
-              />
-            </div>
-            <div className="form-group">
-              Khoá
-              <select
-                className="form-control"
-                id="sessionsChangeInput"
-                ref={sessionChangeRef}
-                defaultValue={semester.session.id}
-              >
-                {sessions && sessionOption(sessions)}
-              </select>
-            </div>
-            <button type="submit" className="btn btn-primary">
-              Cập Nhật
-            </button>
-          </form>
-        </div>
-      )}
     </div>
   )
 }

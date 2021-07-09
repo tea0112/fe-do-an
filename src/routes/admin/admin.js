@@ -30,6 +30,9 @@ import SemesterDelete from "../../containers/admin/Semester/Delete/Delete"
 import DepartmentAdd from "../../containers/admin/Department/Add/Add"
 import DepartmentEdit from "../../containers/admin/Department/Edit/Edit"
 import DepartmentDelete from "../../containers/admin/Department/Delete/Delete"
+import LectureHallAdd from "../../containers/admin/LectureHall/Add/Add"
+import LectureHallEdit from "../../containers/admin/LectureHall/Edit/Edit"
+import LectureHallDelete from "../../containers/admin/LectureHall/Delete/Delete"
 
 function AdminRoute() {
   return (
@@ -115,6 +118,20 @@ function AdminRoute() {
       <PrivateRouteAdmin path="/admin/khoa/them" component={DepartmentAdd} />
       <PrivateRouteAdmin path="/admin/khoa/sua" component={DepartmentEdit} />
       <PrivateRouteAdmin path="/admin/khoa/xoa" component={DepartmentDelete} />
+
+      {/* LectureHall */}
+      <PrivateRouteAdmin
+        path="/admin/giang-duong/them"
+        component={LectureHallAdd}
+      />
+      <PrivateRouteAdmin
+        path="/admin/giang-duong/sua"
+        component={LectureHallEdit}
+      />
+      <PrivateRouteAdmin
+        path="/admin/giang-duong/xoa"
+        component={LectureHallDelete}
+      />
 
       {/* Not Found Page */}
       <Route component={NotFound} />
