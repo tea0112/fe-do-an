@@ -1,124 +1,218 @@
-import { useEffect, useState } from "react"
-import BasicSelect from "../../../../components/admin/form/BasicSelect/BasicSelect"
-import BasicOption from "../../../../components/admin/form/BasicOption/BasicOption"
-import BasicButton from "../../../../components/admin/form/BasicButton/BasicButton"
-import EditTable from "./EditTable"
+import { useState, useEffect, useRef } from "react"
 import useAuthRequest from "../../../../helpers/useAuthRequest"
 
-function SubjectEdit() {
-  const [state, setState] = useState({
-    subjects: null,
-    departments: null,
-    departmentInput: "",
-    subjectTypeInput: "0",
-    isLoading: false,
-  })
+function deepFreeze(object) {
+  const propNames = Object.getOwnPropertyNames(object)
+  for (const name of propNames) {
+    const value = object[name]
+    if (value && typeof value === "object") {
+      deepFreeze(value)
+    }
+  }
+  return Object.freeze(object)
+}
+
+function LecturerEdit() {
+  const [departments, setDepartments] = useState(null)
+  const [lecturers, setLecturers] = useState(null)
+  const [lecturer, setLecturer] = useState(null)
+  const [departmentUpdateInput, setDepartmentUpdateInput] = useState(null)
+
+  const departmentInputRef = useRef()
+  const lecturerInputRef = useRef()
+  const departmentUpdateInputRef = useRef()
+  const lecturerUpdateInputRef = useRef()
+
   const authRequest = useAuthRequest()
 
-  const getDepartments = () => authRequest.get("/api/departments")
-  const getSubjects = (subjectType, departmentId) =>
-    authRequest.get(
-      `/api/admin/subjects?subjectType=${subjectType}&departmentId=${departmentId}`
-    )
+  // get
+  const getDepartment = () => authRequest.get("/api/departments")
+  const getLecturers = (departmentId) =>
+    authRequest.get(`/api/admin/lecturers?departmentId=${departmentId}`)
+  const getLecturer = (id) => authRequest.get(`/api/admin/lecturers/${id}`)
 
-  useEffect(async () => {
-    try {
-      const fetchedDepartments = await getDepartments()
-      setState((prevState) => ({
-        ...prevState,
-        departments: fetchedDepartments.data,
-      }))
-      if (fetchedDepartments.data.length > 0) {
-        setState((prevState) => ({
-          ...prevState,
-          departmentInput: fetchedDepartments.data[0].id,
-        }))
-      }
-    } catch (e) {
+  // effect
+  useEffect(() => {
+    getDepartment()
+      .then((departmentsData) => {
+        setDepartments(deepFreeze(departmentsData.data))
+        setDepartmentUpdateInput(departmentInputRef.current.value)
+      })
       // eslint-disable-next-line no-console
-      console.log(e)
-    }
+      .catch((err) => console.log(err))
   }, [])
-
-  const onDepartmentInputChange = (e) => {
-    setState((prevState) => ({ ...prevState, departmentInput: e.target.value }))
-  }
-  const onSubjectTypeInputChange = (e) => {
-    setState((prevState) => ({
-      ...prevState,
-      subjectTypeInput: e.target.value,
-    }))
-  }
-
-  const onSubmit = async (e) => {
-    e.preventDefault()
-    try {
-      setState((prevState) => ({ ...prevState, isLoading: true }))
-      const fetchedSubjects = await getSubjects(
-        state.subjectTypeInput,
-        state.departmentInput
-      )
-      setState((prevState) => ({
-        ...prevState,
-        subjects: fetchedSubjects.data,
-      }))
-      setState((prevState) => ({ ...prevState, isLoading: false }))
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.log(err)
-      setState((prevState) => ({ ...prevState, isLoading: false }))
+  useEffect(() => {
+    if (departments) {
+      getLecturers(departmentInputRef.current.value)
+        .then((lecturersData) => {
+          setLecturers(deepFreeze(lecturersData.data))
+        })
+        // eslint-disable-next-line no-console
+        .catch((err) => console.log(err))
     }
+  }, [departments])
+  useEffect(() => {
+    if (lecturers && lecturers.length !== 0) {
+      getLecturer(lecturerInputRef.current.value)
+        .then((lecturerData) => {
+          setLecturer(deepFreeze(lecturerData.data))
+        })
+        // eslint-disable-next-line no-console
+        .catch((err) => console.log(err))
+    } else {
+      setLecturer(null)
+    }
+  }, [lecturers])
+  useEffect(() => {
+    if (lecturer) {
+      departmentUpdateInputRef.current.value = departmentInputRef.current.value
+      lecturerUpdateInputRef.current.value = lecturer.name
+    }
+  }, [lecturer])
+
+  // change
+  const departmentInputChange = () => {
+    setDepartmentUpdateInput(departmentInputRef.current.value)
+    getLecturers(departmentInputRef.current.value)
+      .then((lecturersData) => {
+        setLecturers(deepFreeze(lecturersData.data))
+      })
+      // eslint-disable-next-line no-console
+      .catch((err) => console.log(err))
   }
+  const lecturerInputChange = () => {
+    getLecturer(lecturerInputRef.current.value)
+      .then((lecturerData) => {
+        setLecturer(deepFreeze(lecturerData.data))
+      })
+      // eslint-disable-next-line no-console
+      .catch((err) => console.log(err))
+  }
+  const departmentInputUpdateChange = () => {}
+
+  // submit
+  const onUpdate = (e) => {
+    e.preventDefault()
+    authRequest({
+      method: "PATCH",
+      url: `/api/admin/lecturers/${lecturer.id}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: {
+        name: lecturerUpdateInputRef.current.value,
+        departmentId: departmentUpdateInputRef.current.value,
+      },
+    })
+      .then(() => {
+        alert("Cập Nhật Thành Công")
+        window.location.reload()
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.log(err)
+        alert("Cập Nhật Thất Bại")
+        window.location.reload()
+      })
+  }
+
+  const departmentOption = (departmentData) =>
+    departmentData.map((department) => (
+      <option key={department.id} value={department.id}>
+        {department.name}
+      </option>
+    ))
+  const lecturersOption = (lecturerData) =>
+    lecturerData.map((lecturerElm) => (
+      <option key={lecturerElm.id} value={lecturerElm.id}>
+        {lecturerElm.name}
+      </option>
+    ))
+  const lecturerChange = (lecturerProps) => (
+    <div>
+      <i>Id hiện tại</i>
+      <input
+        type="text"
+        className="form-control"
+        disabled
+        value={lecturerProps && lecturerProps.id}
+      />
+      <i>Tên hiện tại</i>
+      <input
+        type="text"
+        className="form-control"
+        disabled
+        value={lecturerProps && lecturerProps.name}
+      />
+      <i>Khoa hiện tại</i>
+      <input
+        type="text"
+        className="form-control"
+        disabled
+        value={lecturerProps && lecturerProps.department.name}
+      />
+      <hr />
+      <h4>Thay đổi:</h4>
+      <form onSubmit={onUpdate}>
+        <div className="form-group">
+          Khoa
+          <select
+            className="form-control"
+            id="departmentUpdateInput"
+            defaultValue={departmentUpdateInput && departmentUpdateInput}
+            ref={departmentUpdateInputRef}
+            onChange={departmentInputUpdateChange}
+          >
+            {departments && departmentOption(departments)}
+          </select>
+        </div>
+        <div className="form-group">
+          Tên Giảng Viên
+          <input
+            className="form-control"
+            type="text"
+            id="lecturerUpdateInput"
+            ref={lecturerUpdateInputRef}
+            defaultValue={lecturerProps && lecturerProps.name}
+          />
+        </div>
+        <button type="submit" className="btn btn-primary">
+          Cập Nhật
+        </button>
+      </form>
+    </div>
+  )
   return (
-    <>
-      <h1>Sửa Môn</h1>
-      <form onSubmit={onSubmit}>
-        <BasicSelect
-          id="departmentInput"
-          label="Khoa"
-          value={state.departmentInput}
-          onChange={onDepartmentInputChange}
-        >
-          <BasicOption
-            options={state.departments}
-            valueLabel="id"
-            keyLabel="id"
-            content="name"
-          />
-        </BasicSelect>
-        <BasicSelect
-          id="subjectTypeInput"
-          label="Kiểu Môn"
-          onChange={onSubjectTypeInputChange}
-        >
-          <BasicOption
-            options={[
-              { value: 0, type: "Lý Thuyết" },
-              { value: 1, type: "Thực Hành" },
-            ]}
-            valueLabel="value"
-            keyLabel="value"
-            content="type"
-          />
-        </BasicSelect>
-        <BasicButton
-          type="submit"
-          className="btn btn-primary"
-          disabled={state.isLoading}
-        >
-          Tìm
-        </BasicButton>
+    <div>
+      <h1>Sửa Giảng Viên</h1>
+      <form>
+        <div className="form-group">
+          Khoa
+          <select
+            className="form-control"
+            id="departmentInput"
+            ref={departmentInputRef}
+            onChange={departmentInputChange}
+          >
+            {departments && departmentOption(departments)}
+          </select>
+        </div>
+        <div className="form-group">
+          Tên Giảng Viên
+          <select
+            className="form-control"
+            ref={lecturerInputRef}
+            onChange={lecturerInputChange}
+            id="lecturerInput"
+          >
+            {lecturers && lecturersOption(lecturers)}
+          </select>
+        </div>
       </form>
       <hr />
-      {state.subjects && state.departments && (
-        <EditTable
-          subjects={state.subjects}
-          setSubjects={setState}
-          departments={state.departments}
-        />
-      )}
-    </>
+      {lecturer && lecturerChange(lecturer)}
+    </div>
   )
 }
 
-export default SubjectEdit
+export default LecturerEdit
