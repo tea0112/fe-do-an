@@ -11,7 +11,7 @@ export default function axiosAuthRequest(dispatch) {
         dispatch({ type: "LOGOUT_SUCCESS" })
         return <Redirect path="/login" />
       }
-      config.headers.Authorization = localStorage.getItem("accessToken")
+      config.headers.Authorization = `${localStorage.getItem("accessToken")}`
       return config
     },
     (error) => {
