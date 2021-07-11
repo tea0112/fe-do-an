@@ -16,8 +16,13 @@ function LectureHallEdit() {
 
   // effect
   useEffect(async () => {
-    const lectureHalls = await getAllLecturerHalls()
-    setState((prev) => ({ ...prev, lectureHalls: lectureHalls.data }))
+    try {
+      const lectureHalls = await getAllLecturerHalls()
+      setState((prev) => ({ ...prev, lectureHalls: lectureHalls.data }))
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(e)
+    }
   }, [])
   useEffect(async () => {
     if (state.lectureHalls) {

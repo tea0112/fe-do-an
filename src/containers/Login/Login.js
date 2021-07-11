@@ -11,10 +11,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import { useDispatch, useSelector } from "react-redux"
 import { Redirect } from "react-router-dom"
 import backgroundImage from "../../helpers/static/imgs/tru_so_chinh.jpg"
-import {
-  loginRequestAsyncAction,
-  logoutSuccessAction,
-} from "../../actions/authenticationAction"
+import { loginRequestAsyncAction } from "../../actions/authenticationAction"
 import deepFreeze from "../../helpers/deepFreeze"
 import useStateWithLabel from "../../helpers/useStateWithLabel"
 
@@ -139,6 +136,20 @@ export default function Login() {
         type="password"
         id="password"
         autoComplete="current-password"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            // eslint-disable-next-line no-use-before-define
+            if (!firstUpdate) {
+              setFirstUpdate(true)
+            }
+            dispatch(
+              loginRequestAsyncAction({
+                username,
+                password,
+              })
+            )
+          }
+        }}
       />
     ),
     [password]
@@ -175,16 +186,6 @@ export default function Login() {
                 onClick={loginSubmit}
               >
                 Đăng Nhập
-              </Button>
-              <Button
-                type="button"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                onClick={() => dispatch(logoutSuccessAction())}
-              >
-                Logout ( tạm thời )
               </Button>
             </form>
           </div>
