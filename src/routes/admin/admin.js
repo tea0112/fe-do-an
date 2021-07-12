@@ -9,7 +9,7 @@ import DeleteClass from "../../containers/admin/Class/Delete/Delete"
 import AddStudentClass from "../../containers/admin/Class/StudentAdd/StudentAdd"
 import RemoveStudentClass from "../../containers/admin/Class/StudentRemove/StudentRemove"
 import NotFound from "../../components/404"
-import EditStudent from "../../containers/admin/Student/Edit"
+import EditStudent from "../../containers/admin/Student/Edit/Edit"
 import DeleteStudent from "../../containers/admin/Student/Delete"
 import SessionComponent from "../../containers/admin/Session/Add/Add"
 import SessionEdit from "../../containers/admin/Session/Edit/Edit"
@@ -36,6 +36,10 @@ import LectureHallDelete from "../../containers/admin/LectureHall/Delete/Delete"
 import ClassroomAdd from "../../containers/admin/Classroom/Add/Add"
 import ClassroomEdit from "../../containers/admin/Classroom/Edit/Edit"
 import ClassroomDelete from "../../containers/admin/Classroom/Delete/Delete"
+import StudyAdd from "../../containers/admin/Study/Add/StudyAdd"
+import StudyEdit from "../../containers/admin/Study/Edit/Edit"
+import StudyDelete from "../../containers/admin/Study/Delete/Delete"
+import StudyAddId from "../../containers/admin/Study/Add/StudyAddId"
 
 function AdminRoute() {
   return (
@@ -163,6 +167,19 @@ function AdminRoute() {
         path="/admin/phong-hoc/xoa"
         component={ClassroomDelete}
       />
+
+      {/* Study */}
+      <PrivateRouteAdmin
+        exact
+        path="/admin/diem-thi/them"
+        component={StudyAdd}
+      />
+      <PrivateRouteAdmin
+        path="/admin/diem-thi/them/:id"
+        component={StudyAddId}
+      />
+      <PrivateRouteAdmin path="/admin/diem-thi/sua" component={StudyEdit} />
+      <PrivateRouteAdmin path="/admin/diem-thi/xoa" component={StudyDelete} />
 
       {/* Not Found Page */}
       <Route component={NotFound} />

@@ -6,6 +6,10 @@ import EditTable from "./EditTable"
 import useAuthRequest from "../../../../helpers/useAuthRequest"
 
 function SubjectEdit() {
+  useEffect(() => {
+    document.title = "Sửa Môn"
+  }, [])
+
   const [state, setState] = useState({
     subjects: null,
     departments: null,

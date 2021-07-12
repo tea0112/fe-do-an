@@ -16,8 +16,7 @@ import {
 } from "@material-ui/icons"
 import { memo } from "react"
 import MaterialTable from "material-table"
-
-// import _ from "lodash"
+import _ from "lodash"
 
 function Editable(props) {
   const icons = {
@@ -37,32 +36,21 @@ function Editable(props) {
     Retry: Replay,
     SortArrow: ArrowUpward,
   }
-
   // must use with static because state cause memory leak
   const staticColumns = [
-    { title: "Môn", field: "subject.name", editable: "never" },
+    { title: "Mã số sinh viên", field: "user.username", editable: "never" },
     {
-      title: "Loại Môn",
-      field: "subject.subjectType",
-      lookup: {
-        0: "Lý Thuyết",
-        1: "Thực Hành",
-      },
-      editable: "never",
+      title: "Họ",
+      field: "firstName",
     },
-    { title: "Giảng Viên", field: "lecturer.name", editable: "never" },
-    { title: "Thứ", field: "weekDay", editable: "never" },
-    { title: "Tiết Bắt Đầu", field: "startPeriod", editable: "never" },
-    { title: "Tiết Kết Thúc", field: "endPeriod", editable: "never" },
+    { title: "Tên", field: "lastName" },
+    { title: "Ngày Sinh", field: "birth", type: "date" },
+    { title: "Nơi Sinh", field: "place" },
+    { title: "Số Điện Thoại", field: "phoneNumber" },
     {
-      title: "Buổi",
-      field: "periodType",
-      lookup: {
-        0: "Sáng",
-        1: "Chiều",
-        2: "Tối",
-      },
-      editable: "never",
+      title: "Giới Tính",
+      field: "gender",
+      lookup: { false: "Nam", true: "Nữ" },
     },
   ]
   const localization = {
@@ -78,27 +66,30 @@ function Editable(props) {
     },
     body: {
       emptyDataSourceMessage: "Không Tồn Tại Bản Ghi Nào",
-      editTooltip: "Sửa",
+      editTooltip: "Thêm Vào",
       editRow: {
         cancelTooltip: "Huỷ bỏ",
         saveTooltip: "Tiếp tục",
       },
     },
   }
-  const title = `Danh Sách Thời Khoá Biểu`
-  const { schedules } = props
+
+  const title = props.currentClass
+    ? `Danh Sách Sinh Viên Lớp ${props.currentClass.name} - Khoá ${props.currentClass.session.name}`
+    : "Không Tồn Tại Lớp"
   return (
     <MaterialTable
       icons={icons}
       title={title}
       columns={staticColumns}
-      data={schedules}
+      data={props.students}
       localization={localization}
       editable={{
         onRowUpdate: (newData) =>
-          // eslint-disable-next-line no-unused-vars
-          new Promise((resolve, reject) => {
-            window.open(`/admin/thoi-khoa-bieu/sua/${newData.id}`)
+          new Promise((resolve) => {
+            window.open(
+              `/admin/diem-thi/them/${newData.id}?departmentId=${props.departmentInput}`
+            )
             resolve()
           }),
       }}
@@ -107,7 +98,7 @@ function Editable(props) {
 }
 
 function propsAreEqual(prv, nxt) {
-  return _.isEqual(prv.schedules, nxt.schedules)
+  return _.isEqual(prv.students, nxt.students)
 }
 
 export default memo(Editable, propsAreEqual)

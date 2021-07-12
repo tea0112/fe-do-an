@@ -181,6 +181,16 @@ function Sidebar() {
           <CollapseLinkItem title="Xoá Phòng Học" url="/admin/phong-hoc/xoa" />
         </NavItem>
 
+        <NavItem
+          title="Điểm Thi"
+          uniqCollapseName="collapseStudy"
+          fontAwesome="fas fa-star-half-alt"
+        >
+          <CollapseLinkItem title="Thêm Điểm Thi" url="/admin/diem-thi/them" />
+          <CollapseLinkItem title="Sửa Điểm Thi" url="/admin/diem-thi/sua" />
+          <CollapseLinkItem title="Xoá Điểm Thi" url="/admin/diem-thi/xoa" />
+        </NavItem>
+
         {/* Divider */}
         <hr className="sidebar-divider d-none d-md-block" />
 

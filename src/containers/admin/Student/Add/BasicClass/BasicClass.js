@@ -62,7 +62,7 @@ function AddBasicClass(props) {
           />
         )}
       </select>
-      <FormError isValid={isValid} errorMessage={errorMessage} />
+      <FormError errorMessage={errorMessage} />
     </div>
   )
 }

@@ -1,7 +1,8 @@
 import { memo, useEffect, useState } from "react"
 import useAuthRequest from "../../../../helpers/useAuthRequest"
 import Editable from "./EditTable"
-import SessionComponent from "./SessionComponent"
+import BasicSelect from "../../../../components/admin/form/BasicSelect/BasicSelect"
+import BasicOption from "../../../../components/admin/form/BasicOption/BasicOption"
 
 // eslint-disable-next-line no-unused-vars
 function Edit() {
@@ -117,16 +118,27 @@ function Edit() {
         {clazz.name}
       </option>
     ))
+
+  const handleSessionChange = (e) => {
+    setSessionInput(e.target.value)
+  }
   return (
     <>
       <h1>Sửa Sinh Viên</h1>
       <form name="addStudent" onSubmit={handleSubmit}>
-        {sessions && (
-          <SessionComponent
-            setParentSessionInput={setSessionInput}
-            sessions={sessions}
+        <BasicSelect
+          id="sessionInput"
+          onChange={handleSessionChange}
+          value={sessionInput}
+          label="Niên Khoá"
+        >
+          <BasicOption
+            options={sessions}
+            valueLabel="id"
+            keyLabel="id"
+            content="name"
           />
-        )}
+        </BasicSelect>
         <div className="form-group">
           Khoa
           <select
