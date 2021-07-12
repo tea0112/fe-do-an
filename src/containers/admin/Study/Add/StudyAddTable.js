@@ -42,15 +42,17 @@ function Editable(props) {
     {
       title: "Họ",
       field: "firstName",
+      editable: "never",
     },
-    { title: "Tên", field: "lastName" },
-    { title: "Ngày Sinh", field: "birth", type: "date" },
-    { title: "Nơi Sinh", field: "place" },
-    { title: "Số Điện Thoại", field: "phoneNumber" },
+    { title: "Tên", field: "lastName", editable: "never" },
+    { title: "Ngày Sinh", field: "birth", type: "date", editable: "never" },
+    { title: "Nơi Sinh", field: "place", editable: "never" },
+    { title: "Số Điện Thoại", field: "phoneNumber", editable: "never" },
     {
       title: "Giới Tính",
       field: "gender",
       lookup: { false: "Nam", true: "Nữ" },
+      editable: "never",
     },
   ]
   const localization = {

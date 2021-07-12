@@ -38,7 +38,7 @@ import ClassroomEdit from "../../containers/admin/Classroom/Edit/Edit"
 import ClassroomDelete from "../../containers/admin/Classroom/Delete/Delete"
 import StudyAdd from "../../containers/admin/Study/Add/StudyAdd"
 import StudyEdit from "../../containers/admin/Study/Edit/StudyEdit"
-import StudyDelete from "../../containers/admin/Study/Delete/Delete"
+import StudyDelete from "../../containers/admin/Study/Delete/StudyDelete"
 import StudyAddId from "../../containers/admin/Study/Add/StudyAddId"
 
 function AdminRoute() {
