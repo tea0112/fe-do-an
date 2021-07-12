@@ -18,12 +18,9 @@ import { memo } from "react"
 import MaterialTable from "material-table"
 import _ from "lodash"
 import useAuthRequest from "../../../../helpers/useAuthRequest"
-import isoToYYYYMMdd from "../../../../helpers/isoToYYYYMMdd"
-import validateLastName from "../../../../helpers/validations/validateLastName"
-import validatePhoneNumber from "../../../../helpers/validations/validatePhoneNumber"
-import validateFirstName from "../../../../helpers/validations/validateFirstName"
+import validateGrade from "../../../../helpers/validations/validateGrade"
 
-function Editable(props) {
+function Editable({ studies, setStudies }) {
   const icons = {
     Delete,
     Add,
@@ -43,19 +40,36 @@ function Editable(props) {
   }
   // must use with static because state cause memory leak
   const staticColumns = [
-    { title: "Mã số sinh viên", field: "user.username", editable: "never" },
+    {
+      title: "Điểm Thi",
+      field: "grade",
+    },
+    {
+      title: "Môn",
+      field: "subject.name",
+      editable: "never",
+    },
+    {
+      title: "Học Kỳ",
+      field: "semester.termNumber",
+      editable: "never",
+    },
+    {
+      title: "Mã số sinh viên",
+      field: "student.user.username",
+      editable: "never",
+    },
     {
       title: "Họ",
-      field: "firstName",
+      field: "student.firstName",
+      editable: "never",
     },
-    { title: "Tên", field: "lastName" },
-    { title: "Ngày Sinh", field: "birth", type: "date" },
-    { title: "Nơi Sinh", field: "place" },
-    { title: "Số Điện Thoại", field: "phoneNumber" },
+    { title: "Tên", field: "student.lastName", editable: "never" },
     {
-      title: "Giới Tính",
-      field: "gender",
-      lookup: { false: "Nam", true: "Nữ" },
+      title: "Ngày Sinh",
+      field: "student.birth",
+      type: "date",
+      editable: "never",
     },
   ]
   const localization = {
@@ -74,33 +88,22 @@ function Editable(props) {
     },
   }
 
-  const title = props.currentClass
-    ? `Danh Sách Sinh Viên Lớp ${props.currentClass.name} - Khoá ${props.currentClass.session.name}`
-    : "Không Tồn Tại Lớp"
+  const title = `Danh Sách Sinh Viên`
   const authRequest = useAuthRequest()
   return (
     <MaterialTable
       icons={icons}
       title={title}
       columns={staticColumns}
-      data={props.students}
+      data={studies}
       localization={localization}
       editable={{
         onRowUpdate: (newData, oldData) =>
           new Promise((resolve, reject) => {
             const refactoredNewData = {
               ...newData,
-              gender: newData.gender === "true",
-              birth:
-                typeof newData.birth === "string"
-                  ? newData.birth
-                  : isoToYYYYMMdd(newData.birth),
             }
-            const violations = [
-              validateFirstName(refactoredNewData.firstName),
-              validateLastName(refactoredNewData.lastName),
-              validatePhoneNumber(refactoredNewData.phoneNumber),
-            ]
+            const violations = [validateGrade(refactoredNewData.grade)]
             const errors = violations.reduce(
               (acc, crv) =>
                 !crv.isValid ? `${acc} ${crv.errorMessage}\n` : acc,
@@ -112,29 +115,24 @@ function Editable(props) {
             } else {
               authRequest({
                 method: "PATCH",
-                url: `/api/students/${refactoredNewData.id}`,
+                url: `/api/admin/studies/${refactoredNewData.id}`,
                 headers: {
                   "Content-Type": "application/json",
                 },
                 data: {
-                  lastName: refactoredNewData.lastName,
-                  firstName: refactoredNewData.firstName,
-                  birth: refactoredNewData.birth,
-                  place: refactoredNewData.place,
-                  phoneNumber: refactoredNewData.phoneNumber,
-                  gender: refactoredNewData.gender,
+                  grade: refactoredNewData.grade,
                 },
               })
                 .then((updatedStudent) => {
                   window.alert("Cập Nhật Thành Công")
                   // eslint-disable-next-line no-console
                   console.log(updatedStudent)
-                  const dataUpdate = [...props.students]
+                  const dataUpdate = [...studies]
                   const index = oldData.tableData.id
                   dataUpdate[index] = {
                     ...refactoredNewData,
                   }
-                  props.setStudents([...dataUpdate])
+                  setStudies([...dataUpdate])
                   resolve()
                 })
                 .catch((error) => {
@@ -151,7 +149,7 @@ function Editable(props) {
 }
 
 function propsAreEqual(prv, nxt) {
-  return _.isEqual(prv.students, nxt.students)
+  return _.isEqual(prv.studies, nxt.studies)
 }
 
 export default memo(Editable, propsAreEqual)

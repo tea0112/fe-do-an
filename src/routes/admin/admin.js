@@ -37,7 +37,7 @@ import ClassroomAdd from "../../containers/admin/Classroom/Add/Add"
 import ClassroomEdit from "../../containers/admin/Classroom/Edit/Edit"
 import ClassroomDelete from "../../containers/admin/Classroom/Delete/Delete"
 import StudyAdd from "../../containers/admin/Study/Add/StudyAdd"
-import StudyEdit from "../../containers/admin/Study/Edit/Edit"
+import StudyEdit from "../../containers/admin/Study/Edit/StudyEdit"
 import StudyDelete from "../../containers/admin/Study/Delete/Delete"
 import StudyAddId from "../../containers/admin/Study/Add/StudyAddId"
 
