@@ -40,6 +40,7 @@ import StudyAdd from "../../containers/admin/Study/Add/StudyAdd"
 import StudyEdit from "../../containers/admin/Study/Edit/StudyEdit"
 import StudyDelete from "../../containers/admin/Study/Delete/StudyDelete"
 import StudyAddId from "../../containers/admin/Study/Add/StudyAddId"
+import PasswordChange from "../../containers/admin/Student/PasswordChange/PasswordChange"
 
 function AdminRoute() {
   return (
@@ -52,6 +53,10 @@ function AdminRoute() {
       <PrivateRouteAdmin
         path="/admin/sinh-vien/xoa"
         component={DeleteStudent}
+      />
+      <PrivateRouteAdmin
+        path="/admin/lop/doi-mat-khau-sinh-vien"
+        component={PasswordChange}
       />
 
       {/* class */}

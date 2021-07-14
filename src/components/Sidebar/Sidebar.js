@@ -48,6 +48,10 @@ function Sidebar() {
           />
           <CollapseLinkItem title="Sửa Sinh Viên" url="/admin/sinh-vien/sua" />
           <CollapseLinkItem title="Xoá Sinh Viên" url="/admin/sinh-vien/xoa" />
+          <CollapseLinkItem
+            title="Đổi Mật Khẩu Sinh Viên"
+            url="/admin/lop/doi-mat-khau-sinh-vien"
+          />
         </NavItem>
 
         <NavItem

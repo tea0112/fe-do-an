@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.1",
     "bootstrap": "4.6.0",
+    "dateformat": "^4.5.1",
     "immutable": "^4.0.0-rc.12",
     "jquery": "^3.6.0",
     "jquery.easing": "^1.4.1",
