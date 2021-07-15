@@ -1,8 +1,22 @@
 import { Link } from "react-router-dom"
-import NavItem from "../NavItem/NavItem"
-import CollapseLinkItem from "../CollapseLinkItem/CollapseLinkItem"
+import * as $ from "jquery"
+import NavItem from "../../NavItem/NavItem"
+import CollapseLinkItem from "../../CollapseLinkItem/CollapseLinkItem"
 
-function Sidebar() {
+function AdminSidebar() {
+  const onSidebarClick = () => {
+    const bodyTag = document.querySelector("body")
+    const sidebarClass = document.querySelector(".sidebar")
+
+    bodyTag.classList.toggle("sidebar-toggled")
+    sidebarClass.classList.toggle("toggled")
+
+    if (sidebarClass.classList.contains("toggled")) {
+      document.querySelector(".sidebar.collapse")
+    }
+    $(".sidebar .collapse").collapse("hide")
+  }
+
   return (
     <>
       <ul
@@ -205,6 +219,7 @@ function Sidebar() {
             type="button"
             className="rounded-circle border-0"
             id="sidebarToggle"
+            onClick={onSidebarClick}
           />
         </div>
       </ul>
@@ -212,4 +227,4 @@ function Sidebar() {
   )
 }
 
-export default Sidebar
+export default AdminSidebar

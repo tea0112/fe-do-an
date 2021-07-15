@@ -1,6 +1,20 @@
-import adminUser from "../../helpers/static/imgs/user-admin.svg"
+import * as $ from "jquery"
+import adminUser from "../../../helpers/static/imgs/user-admin.svg"
 
-function Navbar() {
+function AdminNavbar() {
+  const onSidebarTopClick = () => {
+    const bodyTag = document.querySelector("body")
+    const sidebarClass = document.querySelector(".sidebar")
+
+    bodyTag.classList.toggle("sidebar-toggled")
+    sidebarClass.classList.toggle("toggled")
+
+    if (sidebarClass.classList.contains("toggled")) {
+      document.querySelector(".sidebar.collapse")
+    }
+    $(".sidebar .collapse").collapse("hide")
+  }
+
   return (
     <>
       <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -9,27 +23,10 @@ function Navbar() {
           type="button"
           id="sidebarToggleTop"
           className="btn btn-link d-md-none rounded-circle mr-3"
+          onClick={onSidebarTopClick}
         >
           <i className="fa fa-bars" />
         </button>
-
-        {/* Topbar Search */}
-        <form className="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-          <div className="input-group">
-            <input
-              type="text"
-              className="form-control bg-light border-0 small"
-              placeholder="Search for..."
-              aria-label="Search"
-              aria-describedby="basic-addon2"
-            />
-            <div className="input-group-append">
-              <button className="btn btn-primary" type="button">
-                <i className="fas fa-search fa-sm" />
-              </button>
-            </div>
-          </div>
-        </form>
 
         {/* Topbar Navbar */}
         <ul className="navbar-nav ml-auto">
@@ -69,55 +66,6 @@ function Navbar() {
               </form>
             </div>
           </li>
-
-          {/* Nav Item - Alerts */}
-          {/* <li className="nav-item dropdown no-arrow mx-1"> */}
-          {/*  <a */}
-          {/*    className="nav-link dropdown-toggle" */}
-          {/*    href="#" */}
-          {/*    id="alertsDropdown" */}
-          {/*    role="button" */}
-          {/*    data-toggle="dropdown" */}
-          {/*    aria-haspopup="true" */}
-          {/*    aria-expanded="false" */}
-          {/*  > */}
-          {/*    <i className="fas fa-bell fa-fw" /> */}
-          {/*    /!* Counter - Alerts *!/ */}
-          {/*    /!* <span className="badge badge-danger badge-counter">3+</span> *!/ */}
-          {/*  </a> */}
-          {/*  /!* Dropdown - Alerts *!/ */}
-          {/*  <div */}
-          {/*    className="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" */}
-          {/*    aria-labelledby="alertsDropdown" */}
-          {/*  > */}
-          {/*    <h6 className="dropdown-header">thông báo</h6> */}
-          {/*    <NavItemAlert */}
-          {/*      iconBackground="icon-circle bg-primary" */}
-          {/*      fontawesomeIcon="fas fa-file-alt text-white" */}
-          {/*      time="December 12, 2019" */}
-          {/*      title="A new monthly report is ready to download!" */}
-          {/*    /> */}
-          {/*    <NavItemAlert */}
-          {/*      iconBackground="icon-circle bg-success" */}
-          {/*      fontawesomeIcon="fas fa-file-alt text-white" */}
-          {/*      time="December 7, 2019" */}
-          {/*      title="$290.29 has been deposited into your account!" */}
-          {/*    /> */}
-          {/*    <NavItemAlert */}
-          {/*      iconBackground="icon-circle bg-warning" */}
-          {/*      fontawesomeIcon="fas fa-exclamation-triangle text-white" */}
-          {/*      time="December 2, 2019" */}
-          {/*      title="Spending Alert: We`ve noticed unusually high spending for your */}
-          {/*        account." */}
-          {/*    /> */}
-          {/*    <a */}
-          {/*      className="dropdown-item text-center small text-gray-500" */}
-          {/*      href="#" */}
-          {/*    > */}
-          {/*      Xem Tất Cả Thông Báo */}
-          {/*    </a> */}
-          {/*  </div> */}
-          {/* </li> */}
 
           <div className="topbar-divider d-none d-sm-block" />
 
@@ -162,4 +110,4 @@ function Navbar() {
   )
 }
 
-export default Navbar
+export default AdminNavbar

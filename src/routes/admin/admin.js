@@ -1,6 +1,6 @@
 import React from "react"
 import { Route, Switch } from "react-router-dom"
-import HomeAdmin from "../../containers/admin/Home"
+import HomeAdmin from "../../containers/admin/Home/Home"
 import PrivateRouteAdmin from "../PrivateRouteAdmin"
 import AddStudent from "../../containers/admin/Student/Add/Add"
 import AddClass from "../../containers/admin/Class/Add/Add"

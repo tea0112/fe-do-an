@@ -1,19 +1,19 @@
 import { Redirect, Route } from "react-router-dom"
 import React, { useEffect } from "react"
 import { useSelector } from "react-redux"
-import Sidebar from "../components/Sidebar/Sidebar"
-import Navbar from "../containers/Navbar"
+import AdminSidebar from "../components/admin/AdminSidebar/AdminSidebar"
+import Navbar from "../components/admin/AdminNavbar/AdminNavbar"
 import LogoutModal from "../components/LogoutModal/LogoutModal"
 import deepFreeze from "../helpers/deepFreeze"
-import customScriptSbAdmin from "../helpers/static/pages/sbadmin2/js/sb-admin-2"
+import customScriptSbadmin from "../helpers/static/pages/sbadmin2/js/sb-admin-2"
 
 const PrivateRouteAdmin = ({ component: Component, ...rest }) => {
   const authentication = useSelector((state) =>
     deepFreeze(state.authentication)
   )
   useEffect(() => {
-    customScriptSbAdmin()
-  }, [])
+    customScriptSbadmin()
+  })
 
   return (
     <Route
@@ -26,7 +26,7 @@ const PrivateRouteAdmin = ({ component: Component, ...rest }) => {
           return (
             <>
               <div id="wrapper">
-                <Sidebar />
+                <AdminSidebar />
                 <div id="content-wrapper" className="d-flex flex-column">
                   <div id="content">
                     <Navbar />
