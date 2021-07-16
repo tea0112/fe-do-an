@@ -55,11 +55,7 @@ function AddBasicClass(props) {
         id="classSelectInput"
       >
         {options && (
-          <BasicClassOptions
-            options={options}
-            valueProperty="id"
-            content="name"
-          />
+          <BasicClassOptions options={options} valueLabel="id" content="name" />
         )}
       </select>
       <FormError errorMessage={errorMessage} />

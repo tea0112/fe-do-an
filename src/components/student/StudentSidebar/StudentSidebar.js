@@ -30,7 +30,7 @@ function StudentSidebar() {
           <div className="sidebar-brand-icon rotate-n-15">
             <i className="fas fa-tools" />
           </div>
-          <div className="sidebar-brand-text mx-3">ADMIN</div>
+          <div className="sidebar-brand-text mx-3">Sinh Viên</div>
         </Link>
 
         {/* Divider */}
@@ -49,16 +49,6 @@ function StudentSidebar() {
 
         {/* Heading */}
         <div className="sidebar-heading">Giao Diện</div>
-        <NavItem
-          title="Sinh Viên"
-          uniqCollapseName="collapseStudent"
-          fontAwesome="fas fa-graduation-cap"
-        >
-          <CollapseLinkItem
-            title="Thông Tin Cá Nhân"
-            url="/sinh-vien/thong-tin-ca-nhan"
-          />
-        </NavItem>
 
         <NavItem
           title="Thời Khóa Biểu"

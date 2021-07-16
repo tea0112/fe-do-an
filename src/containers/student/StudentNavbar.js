@@ -16,9 +16,14 @@ function StudentNavbar() {
     authRequest.get(`/api/studentClass?studentId=${studentId}`)
 
   useEffect(async () => {
-    const fetchedCurrentClass = await fetchCurrentClass(student.id)
-    setCurrentClasses(fetchedCurrentClass.data)
-  })
+    try {
+      const fetchedCurrentClass = await fetchCurrentClass(student.id)
+      setCurrentClasses(fetchedCurrentClass.data)
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(e)
+    }
+  }, [])
 
   const onSidebarTopClick = () => {
     const bodyTag = document.querySelector("body")
@@ -99,10 +104,13 @@ function StudentNavbar() {
               <span className="mr-2 d-none d-lg-inline text-gray-600 large">
                 {student && (
                   <>
-                    {student.user.username}&nbsp;-&nbsp;{student.firstName}
+                    <b>Mã Sinh Viên:</b> {student.user.username}
+                    &nbsp;-&nbsp;<b>Tên:</b>&nbsp;
+                    {student.firstName}
                     &nbsp;
                     {student.lastName}
-                    &nbsp;-&nbsp;
+                    &nbsp;-&nbsp; <b>Khóa:</b>&nbsp;{student.session.name}
+                    &nbsp;-&nbsp;<b>Lớp: </b>
                     {currentClasses &&
                       currentClasses.reduce(
                         (acc, crv, idx) =>

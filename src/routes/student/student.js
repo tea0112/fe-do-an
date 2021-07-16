@@ -4,6 +4,7 @@ import deepFreeze from "../../helpers/deepFreeze"
 import HomeStudent from "../../components/student/StudentHome/StudentHome"
 import PrivateRouteStudent from "../PrivateRouteStudent"
 import StudentProfile from "../../containers/student/StudentProfile"
+import StudentSchedule from "../../components/student/StudentSchedule/StudentSchedule"
 
 function StudentRoute() {
   const authentication = useSelector((state) =>
@@ -24,7 +25,7 @@ function StudentRoute() {
       />
       <PrivateRouteStudent
         path="/sinh-vien/thoi-khoa-bieu/hien-tai"
-        component={HomeStudent}
+        component={StudentSchedule}
         authentication={authentication}
       />
       <PrivateRouteStudent

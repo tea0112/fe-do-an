@@ -53,7 +53,7 @@ function AddSession(props) {
         id="sessionSelectInput"
       >
         {options && (
-          <SessionOptions options={options} valueProperty="id" content="name" />
+          <SessionOptions options={options} valueLabel="id" content="name" />
         )}
       </select>
       <FormError isValid={isValid} errorMessage={errorMessage} />

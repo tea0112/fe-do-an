@@ -84,22 +84,27 @@ function ScheduleAdd() {
     authRequest.get(`/api/admin/classrooms?lectureHallId=${lectureHallId}`)
 
   useEffect(async () => {
-    const departmentsData = await getAllDepartments()
-    const sessionsData = await getAllSessions()
-    const lectureHallsData = await getAllLectureHalls()
+    try {
+      const departmentsData = await getAllDepartments()
+      const sessionsData = await getAllSessions()
+      const lectureHallsData = await getAllLectureHalls()
 
-    setDepartments(departmentsData.data)
-    setSessions(sessionsData.data)
-    setLectureHalls(lectureHallsData.data)
+      setDepartments(departmentsData.data)
+      setSessions(sessionsData.data)
+      setLectureHalls(lectureHallsData.data)
 
-    if (departmentsData.data.length > 0) {
-      setDepartmentInput(departmentsData.data[0].id.toString())
-    }
-    if (sessionsData.data.length > 0) {
-      setSessionInput(sessionsData.data[0].id.toString())
-    }
-    if (lectureHallsData.data.length > 0) {
-      setLectureHallInput(lectureHallsData.data[0].id.toString())
+      if (departmentsData.data.length > 0) {
+        setDepartmentInput(departmentsData.data[0].id.toString())
+      }
+      if (sessionsData.data.length > 0) {
+        setSessionInput(sessionsData.data[0].id.toString())
+      }
+      if (lectureHallsData.data.length > 0) {
+        setLectureHallInput(lectureHallsData.data[0].id.toString())
+      }
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(e)
     }
   }, [])
   useEffect(async () => {
@@ -253,8 +258,9 @@ function ScheduleAdd() {
             >
               {departments && (
                 <BasicOption
+                  keyLabel="id"
+                  valueLabel="id"
                   options={departments}
-                  valueProperty="id"
                   content="name"
                 />
               )}
@@ -282,11 +288,7 @@ function ScheduleAdd() {
             onChange={onSubjectNameInputChange}
           >
             {subjects && (
-              <BasicOption
-                options={subjects}
-                valueProperty="id"
-                content="name"
-              />
+              <BasicOption options={subjects} valueLabel="id" content="name" />
             )}
           </select>
         </div>
@@ -302,7 +304,7 @@ function ScheduleAdd() {
               {lecturers && (
                 <BasicOption
                   options={lecturers}
-                  valueProperty="id"
+                  valueLabel="id"
                   content="name"
                 />
               )}
@@ -318,11 +320,7 @@ function ScheduleAdd() {
             onChange={onSessionInputChange}
           >
             {sessions && (
-              <BasicOption
-                options={sessions}
-                valueProperty="id"
-                content="name"
-              />
+              <BasicOption options={sessions} valueLabel="id" content="name" />
             )}
           </select>
         </div>
@@ -335,11 +333,7 @@ function ScheduleAdd() {
             onChange={onClassInputChange}
           >
             {classes && (
-              <BasicOption
-                options={classes}
-                valueProperty="id"
-                content="name"
-              />
+              <BasicOption options={classes} valueLabel="id" content="name" />
             )}
           </select>
         </div>
@@ -354,7 +348,7 @@ function ScheduleAdd() {
             {semesters && (
               <BasicOption
                 options={semesters}
-                valueProperty="id"
+                valueLabel="id"
                 content="termNumber"
               />
             )}
@@ -453,7 +447,7 @@ function ScheduleAdd() {
             {lectureHalls && (
               <BasicOption
                 options={lectureHalls}
-                valueProperty="id"
+                valueLabel="id"
                 content="name"
               />
             )}
@@ -470,7 +464,7 @@ function ScheduleAdd() {
             {classrooms && (
               <BasicOption
                 options={classrooms}
-                valueProperty="id"
+                valueLabel="id"
                 content="name"
               />
             )}
