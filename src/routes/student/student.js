@@ -5,6 +5,7 @@ import HomeStudent from "../../components/student/StudentHome/StudentHome"
 import PrivateRouteStudent from "../PrivateRouteStudent"
 import StudentProfile from "../../containers/student/StudentProfile"
 import StudentSchedule from "../../components/student/StudentSchedule/StudentSchedule"
+import StudentGrade from "../../components/student/StudentGrade/StudentGrade"
 
 function StudentRoute() {
   const authentication = useSelector((state) =>
@@ -30,7 +31,7 @@ function StudentRoute() {
       />
       <PrivateRouteStudent
         path="/sinh-vien/diem/diem-thi"
-        component={HomeStudent}
+        component={StudentGrade}
         authentication={authentication}
       />
     </>
