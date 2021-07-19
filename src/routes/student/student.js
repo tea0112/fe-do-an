@@ -4,8 +4,8 @@ import deepFreeze from "../../helpers/deepFreeze"
 import HomeStudent from "../../components/student/StudentHome/StudentHome"
 import PrivateRouteStudent from "../PrivateRouteStudent"
 import StudentProfile from "../../containers/student/StudentProfile"
-import StudentSchedule from "../../components/student/StudentSchedule/StudentSchedule"
-import StudentGrade from "../../components/student/StudentGrade/StudentGrade"
+import StudentSchedule from "../../containers/student/StudentSchedule"
+import StudentGrade from "../../containers/student/StudentGrade"
 
 function StudentRoute() {
   const authentication = useSelector((state) =>

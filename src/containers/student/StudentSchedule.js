@@ -16,7 +16,7 @@ import {
   Search,
 } from "@material-ui/icons"
 import { useEffect, useState } from "react"
-import useAuthRequest from "../../../helpers/useAuthRequest"
+import useAuthRequest from "../../helpers/useAuthRequest"
 
 function StudentSchedule() {
   const columns = [

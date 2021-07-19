@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import queryString from "query-string"
-import BasicInput from "../../../../components/admin/form/BasicInput/BasicInput"
+import BasicInput from "../../../../components/form/BasicInput/BasicInput"
 import useAuthRequest from "../../../../helpers/useAuthRequest"
 import FormError from "../../../../components/FormError/FormError"
 import validateGrade from "../../../../helpers/validations/validateGrade"
-import BasicSelect from "../../../../components/admin/form/BasicSelect/BasicSelect"
-import BasicOption from "../../../../components/admin/form/BasicOption/BasicOption"
-import BasicButton from "../../../../components/admin/form/BasicButton/BasicButton"
+import BasicSelect from "../../../../components/form/BasicSelect/BasicSelect"
+import BasicOption from "../../../../components/form/BasicOption/BasicOption"
+import BasicButton from "../../../../components/form/BasicButton/BasicButton"
 
 function StudyAddId() {
   useEffect(() => {

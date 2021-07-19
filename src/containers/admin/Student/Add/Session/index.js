@@ -3,7 +3,7 @@ import _ from "lodash"
 import axios from "axios"
 import useStateWithLabel from "../../../../../helpers/useStateWithLabel"
 import FormError from "../../../../../components/FormError/FormError"
-import SessionOptions from "../../../../../components/admin/form/BasicOption/BasicOption"
+import SessionOptions from "../../../../../components/form/BasicOption/BasicOption"
 
 function AddSession(props) {
   const [session, setSession] = useStateWithLabel(null, "session")

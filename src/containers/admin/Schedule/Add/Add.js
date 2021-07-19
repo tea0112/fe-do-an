@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import useStateWithLabel from "../../../../helpers/useStateWithLabel"
-import BasicOption from "../../../../components/admin/form/BasicOption/BasicOption"
+import BasicOption from "../../../../components/form/BasicOption/BasicOption"
 import useAuthRequest from "../../../../helpers/useAuthRequest"
 
 function ScheduleAdd() {

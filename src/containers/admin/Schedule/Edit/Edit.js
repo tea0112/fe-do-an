@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import BasicSelect from "../../../../components/admin/form/BasicSelect/BasicSelect"
-import BasicOption from "../../../../components/admin/form/BasicOption/BasicOption"
-import BasicButton from "../../../../components/admin/form/BasicButton/BasicButton"
+import BasicSelect from "../../../../components/form/BasicSelect/BasicSelect"
+import BasicOption from "../../../../components/form/BasicOption/BasicOption"
+import BasicButton from "../../../../components/form/BasicButton/BasicButton"
 import useAuthRequest from "../../../../helpers/useAuthRequest"
 import EditTable from "./EditTable"
 

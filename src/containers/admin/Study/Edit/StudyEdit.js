@@ -1,8 +1,8 @@
 import { memo, useEffect, useState } from "react"
 import useAuthRequest from "../../../../helpers/useAuthRequest"
 import Editable from "./EditTable"
-import BasicSelect from "../../../../components/admin/form/BasicSelect/BasicSelect"
-import BasicOption from "../../../../components/admin/form/BasicOption/BasicOption"
+import BasicSelect from "../../../../components/form/BasicSelect/BasicSelect"
+import BasicOption from "../../../../components/form/BasicOption/BasicOption"
 
 // eslint-disable-next-line no-unused-vars
 function StudyAdd() {
