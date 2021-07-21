@@ -8,6 +8,7 @@ import {
   Edit as EditIcon,
   FilterList,
   FirstPage,
+  ImportExport,
   LastPage,
   NavigateBefore,
   NavigateNext,
@@ -21,6 +22,7 @@ import MaterialTable from "material-table"
 
 function Editable(props) {
   const icons = {
+    Export: ImportExport,
     Delete,
     Add,
     Check,
@@ -71,6 +73,7 @@ function Editable(props) {
     },
     toolbar: {
       searchPlaceholder: "Tìm Kiếm",
+      exportTitle: "Xuất",
     },
     pagination: {
       labelRowsSelect: "Dòng",
@@ -89,6 +92,9 @@ function Editable(props) {
   const { schedules } = props
   return (
     <MaterialTable
+      options={{
+        exportButton: { csv: true, pdf: false },
+      }}
       icons={icons}
       title={title}
       columns={staticColumns}

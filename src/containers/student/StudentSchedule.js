@@ -9,6 +9,7 @@ import {
   Edit as EditIcon,
   FilterList,
   FirstPage,
+  ImportExport,
   LastPage,
   NavigateBefore,
   NavigateNext,
@@ -46,6 +47,7 @@ function StudentSchedule() {
     },
     toolbar: {
       searchPlaceholder: "Tìm Kiếm",
+      exportTitle: "Xuất",
     },
     pagination: {
       labelRowsSelect: "Dòng",
@@ -61,6 +63,7 @@ function StudentSchedule() {
     },
   }
   const icons = {
+    Export: ImportExport,
     Delete,
     Add,
     Check,
@@ -104,6 +107,9 @@ function StudentSchedule() {
       <hr />
       {theorySchedules && (
         <MaterialTable
+          options={{
+            exportButton: { csv: true, pdf: false },
+          }}
           title="Lý Thuyết"
           icons={icons}
           columns={columns}
@@ -114,6 +120,9 @@ function StudentSchedule() {
       <hr />
       {practiceSchedules && (
         <MaterialTable
+          options={{
+            exportButton: { csv: true, pdf: false },
+          }}
           title="Thực Hành"
           icons={icons}
           columns={columns}

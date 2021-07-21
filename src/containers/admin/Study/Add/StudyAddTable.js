@@ -8,6 +8,7 @@ import {
   Edit as EditIcon,
   FilterList,
   FirstPage,
+  ImportExport,
   LastPage,
   NavigateBefore,
   NavigateNext,
@@ -20,6 +21,7 @@ import _ from "lodash"
 
 function Editable(props) {
   const icons = {
+    Export: ImportExport,
     Delete,
     Add,
     Check,
@@ -61,6 +63,7 @@ function Editable(props) {
     },
     toolbar: {
       searchPlaceholder: "Tìm Kiếm",
+      exportTitle: "Xuất",
     },
     pagination: {
       labelRowsSelect: "Dòng",
@@ -81,6 +84,9 @@ function Editable(props) {
     : "Không Tồn Tại Lớp"
   return (
     <MaterialTable
+      options={{
+        exportButton: { csv: true, pdf: false },
+      }}
       icons={icons}
       title={title}
       columns={staticColumns}

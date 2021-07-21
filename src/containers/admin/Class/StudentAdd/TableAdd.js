@@ -8,6 +8,7 @@ import {
   Edit as EditIcon,
   FilterList,
   FirstPage,
+  ImportExport,
   LastPage,
   NavigateBefore,
   NavigateNext,
@@ -27,6 +28,7 @@ function Editable({ data, classes }) {
     {}
   )
   const icons = {
+    Export: ImportExport,
     Delete,
     Add,
     Check,
@@ -77,6 +79,7 @@ function Editable({ data, classes }) {
     },
     toolbar: {
       searchPlaceholder: "Tìm Kiếm",
+      exportTitle: "Xuất",
     },
     pagination: {
       labelRowsSelect: "Dòng",
@@ -92,6 +95,9 @@ function Editable({ data, classes }) {
   const authRequest = useAuthRequest()
   return (
     <MaterialTable
+      options={{
+        exportButton: { csv: true, pdf: false },
+      }}
       icons={icons}
       title={title}
       columns={staticColumns}

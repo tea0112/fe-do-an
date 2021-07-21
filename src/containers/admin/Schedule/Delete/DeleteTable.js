@@ -8,6 +8,7 @@ import {
   Edit as EditIcon,
   FilterList,
   FirstPage,
+  ImportExport,
   LastPage,
   NavigateBefore,
   NavigateNext,
@@ -21,6 +22,7 @@ import useAuthRequest from "../../../../helpers/useAuthRequest"
 
 function DeleteTable({ schedules, setSchedules }) {
   const icons = {
+    Export: ImportExport,
     Delete,
     Add,
     Check,
@@ -70,6 +72,7 @@ function DeleteTable({ schedules, setSchedules }) {
     },
     toolbar: {
       searchPlaceholder: "Tìm Kiếm",
+      exportTitle: "Xuất",
     },
     pagination: {
       labelRowsSelect: "Dòng",
@@ -87,6 +90,9 @@ function DeleteTable({ schedules, setSchedules }) {
   const authRequest = useAuthRequest()
   return (
     <MaterialTable
+      options={{
+        exportButton: { csv: true, pdf: false },
+      }}
       icons={icons}
       title={title}
       columns={staticColumns}

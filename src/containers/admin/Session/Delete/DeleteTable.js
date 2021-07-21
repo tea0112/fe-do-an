@@ -8,6 +8,7 @@ import {
   Edit as EditIcon,
   FilterList,
   FirstPage,
+  ImportExport,
   LastPage,
   NavigateBefore,
   NavigateNext,
@@ -21,6 +22,7 @@ import useAuthRequest from "../../../../helpers/useAuthRequest"
 
 function Editable({ sessions, setSessions }) {
   const icons = {
+    Export: ImportExport,
     Delete,
     Add,
     Check,
@@ -51,6 +53,7 @@ function Editable({ sessions, setSessions }) {
     },
     toolbar: {
       searchPlaceholder: "Tìm Kiếm",
+      exportTitle: "Xuất",
     },
     pagination: {
       labelRowsSelect: "Dòng",
@@ -68,6 +71,9 @@ function Editable({ sessions, setSessions }) {
   const authRequest = useAuthRequest()
   return (
     <MaterialTable
+      options={{
+        exportButton: { csv: true, pdf: false },
+      }}
       icons={icons}
       title={title}
       columns={staticColumns}

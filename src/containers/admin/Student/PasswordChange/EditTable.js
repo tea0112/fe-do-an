@@ -8,6 +8,7 @@ import {
   Edit as EditIcon,
   FilterList,
   FirstPage,
+  ImportExport,
   LastPage,
   NavigateBefore,
   NavigateNext,
@@ -22,6 +23,7 @@ import validatePassword from "../../../../helpers/validations/validatePassword"
 
 function Editable(props) {
   const icons = {
+    Export: ImportExport,
     Delete,
     Add,
     Check,
@@ -67,6 +69,7 @@ function Editable(props) {
     },
     toolbar: {
       searchPlaceholder: "Tìm Kiếm",
+      exportTitle: "Xuất",
     },
     pagination: {
       labelRowsSelect: "Dòng",
@@ -83,6 +86,9 @@ function Editable(props) {
   const authRequest = useAuthRequest()
   return (
     <MaterialTable
+      options={{
+        exportButton: { csv: true, pdf: false },
+      }}
       icons={icons}
       title={title}
       columns={staticColumns}

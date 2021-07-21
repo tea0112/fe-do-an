@@ -10,6 +10,7 @@ import {
   Edit as EditIcon,
   FilterList,
   FirstPage,
+  ImportExport,
   LastPage,
   NavigateBefore,
   NavigateNext,
@@ -32,6 +33,7 @@ const localization = {
   },
   toolbar: {
     searchPlaceholder: "Tìm Kiếm",
+    exportTitle: "Xuất",
   },
   pagination: {
     labelRowsSelect: "Dòng",
@@ -48,6 +50,7 @@ const localization = {
 }
 
 const icons = {
+  Export: ImportExport,
   Delete,
   Add,
   Check,
@@ -157,11 +160,14 @@ function StudentGrade() {
       </BasicSelect>
 
       <MaterialTable
-        title="Thực Hành"
+        title={gradeTypeInput === "0" ? "Lý Thuyết" : "Thực Hành"}
         icons={icons}
         columns={columns}
         localization={localization}
         data={grades}
+        options={{
+          exportButton: { csv: true, pdf: false },
+        }}
       />
     </>
   )
