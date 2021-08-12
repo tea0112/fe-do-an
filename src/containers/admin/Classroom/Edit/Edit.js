@@ -24,10 +24,12 @@ function SemesterUpdate() {
   }, [])
   useEffect(async () => {
     if (state.lectureHalls) {
-      setState((prevState) => ({
-        ...prevState,
-        selectedLectureHall: state.lectureHalls[0].id,
-      }))
+      if (state.lectureHalls.length > 0) {
+        setState((prevState) => ({
+          ...prevState,
+          selectedLectureHall: state.lectureHalls[0].id,
+        }))
+      }
     }
   }, [state.lectureHalls])
   useEffect(async () => {

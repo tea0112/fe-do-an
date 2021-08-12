@@ -20,7 +20,9 @@ function LectureHallDelete() {
   }, [])
   useEffect(async () => {
     if (state.lectureHalls) {
-      setState({ ...state, selectedLectureHall: state.lectureHalls[0].id })
+      if (state.lectureHalls.length > 0) {
+        setState({ ...state, selectedLectureHall: state.lectureHalls[0].id })
+      }
     }
   }, [state.lectureHalls])
   useEffect(() => {

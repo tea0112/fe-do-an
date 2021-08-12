@@ -63,7 +63,7 @@ function StudentRemove() {
         setSessions(sessionArr.data)
         setDepartments(departmentArr.data)
 
-        if (sessionArr.data && departmentArr.data) {
+        if (sessionArr.data.length > 0 && departmentArr.data.length > 0) {
           setSessionInput(sessionArr.data[0].id)
           setDepartmentInput(departmentArr.data[0].id)
 

@@ -26,10 +26,12 @@ function LectureHallEdit() {
   }, [])
   useEffect(async () => {
     if (state.lectureHalls) {
-      setState((prev) => ({
-        ...prev,
-        selectedLectureHall: state.lectureHalls[0].id,
-      }))
+      if (state.lectureHalls.length > 0) {
+        setState((prev) => ({
+          ...prev,
+          selectedLectureHall: state.lectureHalls[0].id,
+        }))
+      }
     }
   }, [state.lectureHalls])
   useEffect(() => {

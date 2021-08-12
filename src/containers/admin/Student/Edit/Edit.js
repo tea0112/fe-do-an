@@ -36,16 +36,20 @@ function Edit() {
         setSessions(sessionArr.data)
         setDepartments(departmentArr.data)
 
-        if (sessionArr.data && departmentArr.data) {
+        if (sessionArr.data.length > 0 && departmentArr.data.length > 0) {
           setSessionInput(sessionArr.data[0].id)
           setDepartmentInput(departmentArr.data[0].id)
 
-          getClasses(sessionArr.data[0].id, departmentArr.data[0].id)
-            .then((fetchedClasses) => {
-              setClasses(fetchedClasses.data)
-            })
+          try {
+            getClasses(sessionArr.data[0].id, departmentArr.data[0].id).then(
+              (fetchedClasses) => {
+                setClasses(fetchedClasses.data)
+              }
+            )
+          } catch (err) {
             // eslint-disable-next-line no-console
-            .catch((err) => console.log(err))
+            console.log(err)
+          }
         }
       }
     )

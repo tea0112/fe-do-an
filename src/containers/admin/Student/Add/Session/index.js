@@ -25,7 +25,9 @@ function AddSession(props) {
 
   useEffect(async () => {
     if (options) {
-      setSession(options[0].id)
+      if (options.length > 0) {
+        setSession(options[0].id)
+      }
     }
   }, [options])
 
