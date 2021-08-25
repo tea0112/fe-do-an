@@ -124,7 +124,7 @@ function PasswordChange() {
   }
   return (
     <>
-      <h1>Sửa Sinh Viên</h1>
+      <h1>Đổi Mật Khẩu</h1>
       <form name="addStudent" onSubmit={handleSubmit}>
         <BasicSelect
           id="sessionInput"

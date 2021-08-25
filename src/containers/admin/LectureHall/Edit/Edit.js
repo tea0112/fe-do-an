@@ -100,6 +100,7 @@ function LectureHallEdit() {
 
   return (
     <div>
+      <h1>Sửa giảng đường</h1>
       <div className="form-group">
         <div>Chọn Giảng Đường</div>
         <select

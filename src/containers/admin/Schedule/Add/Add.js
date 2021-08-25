@@ -246,6 +246,7 @@ function ScheduleAdd() {
   }
   return (
     <>
+      <h1>Thêm Thời Khóa Biểu</h1>
       <form onSubmit={onSubmit}>
         <div className="form-group">
           Khoa

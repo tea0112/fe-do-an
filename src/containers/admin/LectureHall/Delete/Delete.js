@@ -83,6 +83,7 @@ function LectureHallDelete() {
 
   return (
     <div>
+      <h1>Xóa Giảng Đường</h1>
       <div className="form-group">
         <div>Chọn Giảng Đường</div>
         <select
