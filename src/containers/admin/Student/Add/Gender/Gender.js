@@ -21,7 +21,7 @@ function AddGender({ onGenderChildChange }) {
 
   return (
     <div className="form-group">
-      Mã Số Sinh Viên Giới Tính:
+      Giới Tính:
       <select
         value={gender}
         onChange={onGenderChange}
