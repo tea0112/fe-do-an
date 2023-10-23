@@ -28,6 +28,10 @@ function DepartmentAdd() {
   return (
     <div>
       <h1>Thêm Khoa</h1>
+      <i>
+        Lưu ý chỉ có duy nhất một khoa cơ bản trong học kỳ đầu tiên quản lý các
+        môn nền tảng.
+      </i>
       <form onSubmit={onSubmit}>
         <div className="form-group">
           Nhập Tên Khoa
