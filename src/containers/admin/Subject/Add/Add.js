@@ -4,7 +4,7 @@ import useAuthRequest from "../../../../helpers/useAuthRequest"
 function SubjectAdd() {
   // -state
   const [departments, setDepartments] = useState(null)
-  const [subjectType, setSubjectType] = useState(null)
+  const [subjectType, setSubjectType] = useState(0)
   const [departmentInput, setDepartmentInput] = useState("")
   const [subjectNameInput, setSubjectNameInput] = useState("")
   const authRequest = useAuthRequest()
@@ -16,6 +16,9 @@ function SubjectAdd() {
   useEffect(() => {
     getDepartment()
       .then((departmentsData) => {
+        if (departmentsData.data.length > 0) {
+          setDepartmentInput(departmentsData.data[0].id)
+        }
         setDepartments(departmentsData.data)
       })
       .catch((err) => {
